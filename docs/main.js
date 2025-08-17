@@ -49,6 +49,14 @@ const el = {
   saveStatus: document.getElementById('save-status')
 };
 
+// Tutorial elements
+const tut = {
+  root: document.getElementById('tutorial'),
+  text: document.getElementById('tutorial-text'),
+  next: document.getElementById('tutorial-next'),
+  close: document.getElementById('tutorial-close')
+};
+
 function format(num) { return Math.floor(num).toLocaleString('sr-RS'); }
 
 function nextParliamentCost(state) {
@@ -138,11 +146,53 @@ async function init() {
   if (loaded) store.setState(loaded);
 
   el.btnBuyParliament.addEventListener('click', buyParliament);
+  const btnSimpleLaw = document.getElementById('btn-simple-law');
+  btnSimpleLaw.addEventListener('click', () => {
+    const s = store.getState();
+    const cost = 10;
+    if (s.resources.dp < cost) return;
+    s.resources.dp -= cost;
+    s.meta.simpleLaws = (s.meta.simpleLaws || 0) + 1;
+    store.setState(s);
+  });
   el.btnSave.addEventListener('click', () => { saveGame(store.getState()); el.saveStatus.textContent = 'Sačuvano'; setTimeout(()=> el.saveStatus.textContent='', 1200); });
   el.btnReset.addEventListener('click', () => { resetGame(store); updateUI(); });
 
+  // Tutorial onboarding
+  initTutorial();
+
   updateUI();
   requestAnimationFrame(loop);
+}
+
+function initTutorial(){
+  const s = store.getState();
+  if (s.meta.tutorialDone) return;
+  s.meta.tutorialStep = s.meta.tutorialStep || 0;
+  store.setState(s);
+  renderTutorial();
+  tut.next.addEventListener('click', () => {
+    const st = store.getState();
+    st.meta.tutorialStep++;
+    if (st.meta.tutorialStep > 2){ st.meta.tutorialDone = true; tut.root.setAttribute('aria-hidden','true'); }
+    store.setState(st);
+    renderTutorial();
+  });
+  tut.close.addEventListener('click', () => { tut.root.setAttribute('aria-hidden','true'); const st = store.getState(); st.meta.tutorialDone = true; store.setState(st); });
+}
+
+function renderTutorial(){
+  const s = store.getState();
+  if (s.meta.tutorialDone){ tut.root.setAttribute('aria-hidden','true'); return; }
+  tut.root.setAttribute('aria-hidden','false');
+  const step = s.meta.tutorialStep || 0;
+  if (step === 0){
+    tut.text.textContent = 'Dobrodošli! Ovo je HUD. Resursi se pasivno povećavaju.';
+  } else if (step === 1){
+    tut.text.textContent = 'Kupite Parlament da otključate dodatne efekte.';
+  } else if (step === 2){
+    tut.text.textContent = 'Donesite Simple Law (10 DP) za prvi zakonodavni čin.';
+  }
 }
 
 init();

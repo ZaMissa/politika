@@ -27,6 +27,12 @@
           <button id="btn-buy-parliament" class="btn-primary">Kupi Parlament (sledeći nivo)</button>
           <p class="hint" id="parliament-cost">Cena: —</p>
         </div>
+        <div class="panel">
+          <h2>Proces zakonodavstva</h2>
+          <p>Simple Law donosi osnovne propise. Trošak je 10 DP.</p>
+          <button id="btn-simple-law" class="btn-primary">Donesi Simple Law</button>
+          <p class="hint" id="simple-law-cost">Cena: 10 DP</p>
+        </div>
       </section>
 
       <section class="actions" aria-label="Akcije">
@@ -39,6 +45,17 @@
     <footer class="app-footer">
       <small>GitHub Pages ready • Client-side only</small>
     </footer>
+
+    <section id="tutorial" class="overlay" aria-hidden="true" aria-label="Tutorijal">
+      <div class="overlay-content" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+        <h2 id="tutorial-title">Tutorijal</h2>
+        <p id="tutorial-text">Dobrodošli!</p>
+        <div class="overlay-actions">
+          <button id="tutorial-next" class="btn-primary">Dalje</button>
+          <button id="tutorial-close" class="btn-danger">Zatvori</button>
+        </div>
+      </div>
+    </section>
 
     <script type="module" src="./main.js"></script>
   </body>

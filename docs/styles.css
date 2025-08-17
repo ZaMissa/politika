@@ -18,4 +18,9 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .hint{color:var(--muted);margin-top:6px}
 @media (max-width:720px){.hud{grid-template-columns:repeat(2,1fr)}}
 
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
+.overlay[aria-hidden="false"]{display:flex}
+.overlay-content{background:var(--card);border:1px solid var(--border);border-radius:10px;max-width:560px;width:92vw;padding:16px}
+.overlay-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+
 
