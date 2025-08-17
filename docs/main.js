@@ -311,6 +311,19 @@ function updateUI() {
   setD('hub-law-const', (s2.meta.constAmend||0)>=1 || s2.resources.dp < caCost);
   setD('hub-law-treaty', s2.resources.dp < itCost);
 
+  // Titles/tooltips and aria-disabled mirroring
+  const setTitle = (id, text) => { const b=document.getElementById(id); if(b) b.title=text; };
+  const mirrorAriaDisabled = (id) => { const b=document.getElementById(id); if (b) b.setAttribute('aria-disabled', b.disabled ? 'true':'false'); };
+  ['hub-parl-1','hub-parl-10','hub-parl-max'].forEach(id=>{ if (parlCfg) setTitle(id, `Parlament: sledeći nivo košta ${parlCfg.costDP} DP`); mirrorAriaDisabled(id); });
+  setTitle('hub-pres-1', i18n?.concepts?.presidency || 'Predsedništvo'); mirrorAriaDisabled('hub-pres-1');
+  ['hub-court-1','hub-court-10','hub-court-max'].forEach(id=>{ if (courtCfg) setTitle(id, `Sudovi: sledeći nivo košta ${courtCfg.costDP} DP`); mirrorAriaDisabled(id); });
+  setTitle('hub-min-edu', (i18n?.concepts?.presidency||'') + ` — Ministarstvo obrazovanja (+${(balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier??0)*100}% DP)`);
+  mirrorAriaDisabled('hub-min-edu');
+  rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setTitle(`hub-rights-${k}`, `${(i18n?.concepts?.[`${k}_rights`]||k)} — ${cost} DP`); mirrorAriaDisabled(`hub-rights-${k}`); });
+  setTitle('hub-law-simple', `${i18n?.concepts?.simple_law||'Simple Law'} — ${(balanceConfig?.laws?.simple?.costDP ?? 10)} DP`); mirrorAriaDisabled('hub-law-simple');
+  setTitle('hub-law-const', `${i18n?.concepts?.constitutional_amendment||'Constitutional Amendment'} — ${caCost} DP`); mirrorAriaDisabled('hub-law-const');
+  setTitle('hub-law-treaty', `${i18n?.concepts?.international_treaty||'International Treaty'} — ${itCost} DP`); mirrorAriaDisabled('hub-law-treaty');
+
   // Render badges (elections)
   const badges = document.getElementById('badges');
   if (badges){
