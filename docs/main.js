@@ -100,6 +100,10 @@ function updateUI() {
   if (presidencyLevelEl) presidencyLevelEl.textContent = s.institutions.presidency || 0;
   const courtsLevelEl = document.getElementById('courts-level');
   if (courtsLevelEl) courtsLevelEl.textContent = s.institutions.courts || 0;
+  const electionCountdown = document.getElementById('election-countdown');
+  const electionStatus = document.getElementById('election-status');
+  if (electionCountdown) electionCountdown.textContent = `${Math.max(0, Math.ceil(s.elections?.active ? s.elections.timeLeft : s.elections?.nextIn || 0))}s`;
+  if (electionStatus) electionStatus.textContent = s.elections?.active ? (s.elections.buff === 'high' ? 'visoka izlaznost' : 'niska izlaznost') : 'van ciklusa';
   const cost = nextParliamentCost(s);
   el.parliamentCost.textContent = cost ? `Cena: ${format(cost)} DP` : 'Maksimalan nivo';
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
@@ -190,7 +194,9 @@ function tick(dtSeconds) {
   s.resources.pop += balanceConfig.baseRates.popPerSec * dtSeconds;
   const dpMult = 1 + (s.policies?.ministries?.includes('education') ? (balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier ?? 0) : 0);
   const lawDpMult = (s.meta.constAmend||0) > 0 ? (balanceConfig?.laws?.constitutionalAmendment?.effects?.dpMultiplier ?? 0) : 0;
-  s.resources.dp += (balanceConfig.baseRates.dpPerPop * s.resources.pop * (dpMult + lawDpMult)) * dtSeconds;
+  let totalDpMult = (dpMult + lawDpMult);
+  if (s.elections?.active && s.elections.buff === 'high') totalDpMult += (balanceConfig?.events?.elections?.effects?.high?.dpMultiplier ?? 0);
+  s.resources.dp += (balanceConfig.baseRates.dpPerPop * s.resources.pop * totalDpMult) * dtSeconds;
   s.resources.st += (balanceConfig.baseRates.stPerInstitution * (
     (s.institutions.parliament > 0 ? 1 : 0) + (s.institutions.presidency > 0 ? 1 : 0) + (s.institutions.courts > 0 ? 1 : 0)
   )) * dtSeconds;
@@ -209,7 +215,40 @@ function tick(dtSeconds) {
   // International Treaty ii gain
   const iiPerSec = (s.meta.intlTreaties||0) * (balanceConfig?.laws?.internationalTreaty?.effects?.iiPerSec ?? 0);
   s.resources.ii += iiPerSec * dtSeconds;
+
+  // Elections timing
+  const conf = balanceConfig?.events?.elections;
+  if (conf) {
+    if (s.elections.active) {
+      s.elections.timeLeft = Math.max(0, (s.elections.timeLeft || 0) - dtSeconds);
+      if (s.elections.timeLeft === 0) {
+        s.elections.active = false;
+        s.elections.nextIn = conf.cycleSeconds;
+        s.elections.buff = null;
+        pushEvent(s, 'Izborni ciklus završen');
+      }
+    } else {
+      s.elections.nextIn = Math.max(0, (s.elections.nextIn || conf.cycleSeconds) - dtSeconds);
+      if (s.elections.nextIn === 0) {
+        startElectionCycle(s);
+      }
+    }
+  }
   store.setState(s);
+}
+
+function startElectionCycle(s){
+  const conf = balanceConfig?.events?.elections;
+  if (!conf) return;
+  // turnout influenced by stability
+  const turnout = Math.min(1, conf.baseTurnout + (s.resources.st * conf.turnoutStabilityFactor));
+  const high = turnout >= conf.highTurnoutThreshold;
+  s.elections.active = true;
+  s.elections.timeLeft = conf.durationSeconds;
+  s.elections.buff = high ? 'high' : 'low';
+  const eff = high ? conf.effects.high : conf.effects.low;
+  s.resources.st += eff.stDelta || 0;
+  pushEvent(s, high ? `Izbori: visoka izlaznost (${Math.round(turnout*100)}%)` : `Izbori: niska izlaznost (${Math.round(turnout*100)}%)`);
 }
 
 let last = 0; let acc = 0; let saveAcc = 0; const TICK = 1/60;
@@ -333,6 +372,8 @@ async function init() {
   });
   const btnClearEvents = document.getElementById('btn-clear-events');
   btnClearEvents.addEventListener('click', () => { const s = store.getState(); s.events = []; store.setState(s); });
+  const btnForceElection = document.getElementById('btn-force-election');
+  btnForceElection?.addEventListener('click', () => { const s = store.getState(); startElectionCycle(s); store.setState(s); updateUI(); });
   // Constitutional Amendment
   const btnCA2 = document.getElementById('btn-const-amend');
   btnCA2?.addEventListener('click', () => {

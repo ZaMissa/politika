@@ -48,6 +48,19 @@
         "5": { "costDP": 20000, "effects": { "pop": 5000, "dpPerSecFlat": 2.0 } }
       }
     }
+  },
+  "events": {
+    "elections": {
+      "cycleSeconds": 60,
+      "durationSeconds": 30,
+      "baseTurnout": 0.4,
+      "turnoutStabilityFactor": 0.003,
+      "highTurnoutThreshold": 0.6,
+      "effects": {
+        "high": { "stDelta": 20, "dpMultiplier": 0.1 },
+        "low": { "stDelta": -15 }
+      }
+    }
   }
 }
 

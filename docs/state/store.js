@@ -9,7 +9,8 @@ const defaultState = () => ({
   unlocked: { tutorials: [], scenarios: [] },
   settings: { language: 'sr', a11y: { contrast: false, fontScale: 1.0 } },
   meta: { version: 0, tutorialDone: false, tutorialStep: 0, simpleLaws: 0, constAmend: 0, intlTreaties: 0 },
-  events: []
+  events: [],
+  elections: { active: false, timeLeft: 0, nextIn: 0, buff: null }
 });
 
 export function createStore(){
@@ -58,6 +59,7 @@ function migrate(state){
   if (typeof state.meta.constAmend === 'undefined') state.meta.constAmend = 0;
   if (typeof state.meta.intlTreaties === 'undefined') state.meta.intlTreaties = 0;
   if (!Array.isArray(state.events)) state.events = [];
+  if (!state.elections) state.elections = { active: false, timeLeft: 0, nextIn: 0, buff: null };
   return state;
 }
 

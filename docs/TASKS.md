@@ -48,6 +48,10 @@ Acceptance (DoD Faza 1)
 - [ ] UI paneli: `InstitutionsView` i `PoliciesView` (DOM sekcije u `index.html` + logika u `main.js`)
 - [ ] Bulk/auto upgrade opcije (heuristika + UI)
 
+### Događaji (Events)
+- [x] Events feed panel i logovi
+- [x] Elections event (periodični, sa buff/debuff i countdown)
+
 Acceptance (DoD Faza 2)
 - [ ] Tri panela funkcionalna; osnovni balans bez deadlock-ova
 - [ ] i18n ključevi za nove pojmove (`docs/i18n/sr.json`)
