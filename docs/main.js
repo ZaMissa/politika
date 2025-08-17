@@ -1,4 +1,4 @@
-import { createStore, loadGame, saveGame, resetGame } from './state/store.js';
+import { createStore, loadGame, saveGame, resetGame, pushEvent } from './state/store.js';
 
 let balanceConfig = {
   tickSeconds: 1,
@@ -109,6 +109,24 @@ function updateUI() {
   } else {
     btnSimpleLaw.classList.remove('highlight');
   }
+
+  // Render events feed
+  const list = document.getElementById('events-list');
+  if (list) {
+    list.innerHTML = '';
+    for (const evt of s.events) {
+      const li = document.createElement('li');
+      const time = new Date(evt.t);
+      const spanTime = document.createElement('span');
+      spanTime.className = 'time';
+      spanTime.textContent = `[${time.toLocaleTimeString('sr-RS')}]`;
+      const spanMsg = document.createElement('span');
+      spanMsg.textContent = evt.m;
+      li.appendChild(spanTime);
+      li.appendChild(spanMsg);
+      list.appendChild(li);
+    }
+  }
 }
 
 function tick(dtSeconds) {
@@ -165,6 +183,7 @@ async function init() {
     if (s.resources.dp < cost) return;
     s.resources.dp -= cost;
     s.meta.simpleLaws = (s.meta.simpleLaws || 0) + 1;
+    pushEvent(s, 'Usvojen Simple Law');
     // Advance tutorial if on step 2
     if (!s.meta.tutorialDone && (s.meta.tutorialStep||0) === 2) {
       s.meta.tutorialStep = 3;
@@ -173,6 +192,8 @@ async function init() {
     }
     store.setState(s);
   });
+  const btnClearEvents = document.getElementById('btn-clear-events');
+  btnClearEvents.addEventListener('click', () => { const s = store.getState(); s.events = []; store.setState(s); });
   el.btnSave.addEventListener('click', () => { saveGame(store.getState()); el.saveStatus.textContent = 'Sačuvano'; setTimeout(()=> el.saveStatus.textContent='', 1200); });
   el.btnReset.addEventListener('click', () => { resetGame(store); updateUI(); });
 

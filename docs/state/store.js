@@ -8,7 +8,8 @@ const defaultState = () => ({
   era: 'archaic',
   unlocked: { tutorials: [], scenarios: [] },
   settings: { language: 'sr', a11y: { contrast: false, fontScale: 1.0 } },
-  meta: { version: 0 }
+  meta: { version: 0, tutorialDone: false, tutorialStep: 0, simpleLaws: 0 },
+  events: []
 });
 
 export function createStore(){
@@ -49,7 +50,18 @@ export function resetGame(store){
 }
 
 function migrate(state){
+  // Ensure new fields exist
+  if (!state.meta) state.meta = { version: 0 };
+  if (typeof state.meta.tutorialDone === 'undefined') state.meta.tutorialDone = false;
+  if (typeof state.meta.tutorialStep === 'undefined') state.meta.tutorialStep = 0;
+  if (typeof state.meta.simpleLaws === 'undefined') state.meta.simpleLaws = 0;
+  if (!Array.isArray(state.events)) state.events = [];
   return state;
+}
+
+export function pushEvent(state, message){
+  const now = new Date();
+  state.events = [{ t: now.toISOString(), m: message }, ...state.events].slice(0, 50);
 }
 
 
