@@ -98,6 +98,8 @@ function updateUI() {
   const cost = nextParliamentCost(s);
   el.parliamentCost.textContent = cost ? `Cena: ${format(cost)} DP` : 'Maksimalan nivo';
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
+  const lawCount = document.getElementById('simple-law-count');
+  if (lawCount) lawCount.textContent = (s.meta.simpleLaws || 0).toString();
 
   // Simple Law button state and tutorial highlight
   const btnSimpleLaw = document.getElementById('btn-simple-law');
@@ -185,6 +187,7 @@ async function init() {
     if (s.resources.dp < cost) return;
     s.resources.dp -= cost;
     s.meta.simpleLaws = (s.meta.simpleLaws || 0) + 1;
+    s.resources.st += 5; // mali efekat kako bi se videla posledica
     pushEvent(s, 'Usvojen Simple Law');
     // Advance tutorial if on step 2
     if (!s.meta.tutorialDone && (s.meta.tutorialStep||0) === 2) {
