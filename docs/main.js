@@ -104,6 +104,13 @@ function updateUI() {
   const electionStatus = document.getElementById('election-status');
   if (electionCountdown) electionCountdown.textContent = `${Math.max(0, Math.ceil(s.elections?.active ? s.elections.timeLeft : s.elections?.nextIn || 0))}s`;
   if (electionStatus) electionStatus.textContent = s.elections?.active ? (s.elections.buff === 'high' ? 'visoka izlaznost' : 'niska izlaznost') : 'van ciklusa';
+
+  // Tooltips
+  const tooltips = [
+    ['btn-buy-parliament','parliament'], ['btn-buy-presidency','presidency'], ['btn-buy-courts','courts'],
+    ['btn-simple-law','simple_law'], ['btn-const-amend','constitutional_amendment'], ['btn-intl-treaty','international_treaty']
+  ];
+  tooltips.forEach(([id,key]) => { const elx = document.getElementById(id); if (elx && i18n?.concepts?.[key]) elx.title = i18n.concepts[key]; });
   const cost = nextParliamentCost(s);
   el.parliamentCost.textContent = cost ? `Cena: ${format(cost)} DP` : 'Maksimalan nivo';
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
@@ -243,6 +250,8 @@ function tick(dtSeconds) {
       s.elections.nextIn = Math.max(0, (s.elections.nextIn || conf.cycleSeconds) - dtSeconds);
       if (s.elections.nextIn === 0) {
         startElectionCycle(s);
+        // unlock concept on first elections
+        pushEvent(s, 'Pojam otključan: Elections');
       }
     }
   }

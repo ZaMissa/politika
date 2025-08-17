@@ -58,7 +58,7 @@ Acceptance (DoD Faza 2)
 - [ ] A11y: tastatura/fokus i ARIA atribute za nove komponente
 
 ### Faza 3 — Edukativni sadržaji i scenariji (2–3 nedelje)
-- [ ] Mikro-tekstovi za sve pojmove (mapa u `docs/i18n/sr.json` → content-only update)
+- [~] Mikro-tekstovi za sve pojmove (mapa u `docs/i18n/sr.json` → content-only update)
 - [ ] Interaktivni tutorijali (4 glavne teme)
 - [ ] Istorijski scenariji (min. 3) sa specifičnim modifikatorima
 - [ ] Quiz sistem sa lokalnim praćenjem rezultata

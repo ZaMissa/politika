@@ -13,7 +13,11 @@
     "human_rights": "Ljudska prava su univerzalna i pripadaju svakom čoveku.",
     "social_rights": "Socijalna prava obuhvataju pristup obrazovanju, zdravstvu i socijalnoj zaštiti.",
     "economic_rights": "Ekonomska prava obuhvataju rad, pravičnu zaradu i slobodu preduzetništva.",
-    "environmental_rights": "Ekološka prava štite životnu sredinu za sadašnje i buduće generacije."
+    "environmental_rights": "Ekološka prava štite životnu sredinu za sadašnje i buduće generacije.",
+    "elections": "Izbori su periodičan proces u kome građani biraju predstavnike; izlaznost utiče na legitimitet i stabilnost.",
+    "simple_law": "Simple Law je osnovni propis sa brzim efektima i malim troškovima.",
+    "constitutional_amendment": "Ustavna izmena menja temeljna pravila sistema i obično zahteva širi konsenzus.",
+    "international_treaty": "Međunarodni sporazum reguliše odnose između država i utiče na međunarodni ugled i saradnju."
   }
 }
 
