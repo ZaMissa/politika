@@ -9,6 +9,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .app-main{padding:16px;max-width:960px;margin:0 auto}
 .hud{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
 .resource{background:var(--card);padding:12px;border:1px solid var(--border);border-radius:8px;text-align:center}
+.rate{color:var(--muted);font-size:.85rem;margin-left:6px}
 .panels{display:grid;grid-template-columns:1fr;gap:16px}
 .panel{background:var(--card);padding:16px;border:1px solid var(--border);border-radius:8px}
 .feed{max-height:240px;overflow:auto;border:1px dashed var(--border);border-radius:8px;padding:8px;background:rgba(255,255,255,0.02)}

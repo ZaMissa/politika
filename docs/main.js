@@ -124,6 +124,17 @@ function updateUI() {
   el.pr.textContent = format(s.resources.pr);
   el.ii.textContent = format(s.resources.ii);
   el.pop.textContent = format(s.resources.pop);
+  // per-second rates (approx based on current multipliers)
+  const dpPs = (balanceConfig.baseRates.dpPerPop * s.resources.pop * (1 + (s.policies?.ministries?.includes('education') ? (balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier ?? 0) : 0) + ((s.meta.constAmend||0) > 0 ? (balanceConfig?.laws?.constitutionalAmendment?.effects?.dpMultiplier ?? 0) : 0) + (s.elections?.active && s.elections.buff==='high' ? (balanceConfig?.events?.elections?.effects?.high?.dpMultiplier ?? 0) : 0)));
+  const stPs = (balanceConfig.baseRates.stPerInstitution * ((s.institutions.parliament>0?1:0)+(s.institutions.presidency>0?1:0)+(s.institutions.courts>0?1:0))) + (balanceConfig?.judicial?.courts?.levels?.[s.institutions.courts || 0]?.effects?.stPerSec ?? 0);
+  const prPs = (balanceConfig.baseRates.prPerPop * s.resources.pop * (1 + ((s.policies?.rights||[]).reduce((acc,k)=> acc + ((balanceConfig?.rights?.[k]?.effects?.prMultiplier)||0),0))));
+  const iiPs = ((s.meta.intlTreaties||0) * (balanceConfig?.laws?.internationalTreaty?.effects?.iiPerSec ?? 0));
+  const popPs = balanceConfig.baseRates.popPerSec;
+  document.getElementById('dp-ps').textContent = `(+${dpPs.toFixed(2)}/s)`;
+  document.getElementById('st-ps').textContent = `(+${stPs.toFixed(2)}/s)`;
+  document.getElementById('pr-ps').textContent = `(+${prPs.toFixed(2)}/s)`;
+  document.getElementById('ii-ps').textContent = `(+${iiPs.toFixed(2)}/s)`;
+  document.getElementById('pop-ps').textContent = `(+${popPs.toFixed(2)}/s)`;
   el.parliamentLevel.textContent = s.institutions.parliament;
   const presidencyLevelEl = document.getElementById('presidency-level');
   if (presidencyLevelEl) presidencyLevelEl.textContent = s.institutions.presidency || 0;
