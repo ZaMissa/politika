@@ -82,6 +82,7 @@ function buyParliament() {
   state.resources.dp -= cost;
   state.institutions.parliament = next;
   applyParliamentEffects(levelCfg, state);
+  pushEvent(state, `Kupljen Parlament nivo ${next}`);
   store.setState(state);
 }
 
@@ -174,6 +175,7 @@ async function init() {
 
   const loaded = loadGame();
   if (loaded) store.setState(loaded);
+  if (loaded) { const s = store.getState(); pushEvent(s, 'Progres učitan'); store.setState(s); }
 
   el.btnBuyParliament.addEventListener('click', buyParliament);
   const btnSimpleLaw = document.getElementById('btn-simple-law');
@@ -194,8 +196,20 @@ async function init() {
   });
   const btnClearEvents = document.getElementById('btn-clear-events');
   btnClearEvents.addEventListener('click', () => { const s = store.getState(); s.events = []; store.setState(s); });
-  el.btnSave.addEventListener('click', () => { saveGame(store.getState()); el.saveStatus.textContent = 'Sačuvano'; setTimeout(()=> el.saveStatus.textContent='', 1200); });
-  el.btnReset.addEventListener('click', () => { resetGame(store); updateUI(); });
+  el.btnSave.addEventListener('click', () => {
+    const s = store.getState();
+    pushEvent(s, 'Progres sačuvan');
+    store.setState(s);
+    saveGame(s);
+    el.saveStatus.textContent = 'Sačuvano'; setTimeout(()=> el.saveStatus.textContent='', 1200);
+  });
+  el.btnReset.addEventListener('click', () => {
+    resetGame(store);
+    const s = store.getState();
+    pushEvent(s, 'Reset stanja');
+    store.setState(s);
+    updateUI();
+  });
 
   // Tutorial onboarding
   initTutorial();
