@@ -591,6 +591,31 @@ async function init() {
     store.setState(s);
     updateUI();
   });
+  // Export
+  document.getElementById('btn-export')?.addEventListener('click', () => {
+    const data = JSON.stringify(store.getState(), null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'nation-builder-save.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+  // Import
+  const inputImport = document.getElementById('input-import');
+  inputImport?.addEventListener('change', async (e) => {
+    const file = e.target.files?.[0]; if (!file) return;
+    try{
+      const text = await file.text();
+      const json = JSON.parse(text);
+      store.setState(json);
+      pushEvent(store.getState(), 'Save importovan');
+      updateUI();
+    }catch(err){
+      console.warn('Import failed', err);
+    }finally{
+      e.target.value = '';
+    }
+  });
 
   // Tutorial onboarding
   initTutorial();

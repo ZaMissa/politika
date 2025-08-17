@@ -87,6 +87,7 @@ Acceptance (DoD Faza 4)
 - [ ] Verifikovati GitHub Pages build i javni URL
 - [ ] Dodati link u `README.md`
 - [ ] Ažurirati `DEVELOPMENTPLAN.md` statusima i eventualnim pivotima
+- [x] Export/Import sejva (JSON)
 
 Acceptance (DoD Faza 5)
 - [ ] Pages produkcija i (opciono) staging zelen
