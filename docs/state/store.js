@@ -10,7 +10,8 @@ const defaultState = () => ({
   settings: { language: 'sr', a11y: { contrast: false, fontScale: 1.0 } },
   meta: { version: 0, tutorialDone: false, tutorialStep: 0, simpleLaws: 0, constAmend: 0, intlTreaties: 0 },
   events: [],
-  elections: { active: false, timeLeft: 0, nextIn: 0, buff: null }
+  elections: { active: false, timeLeft: 0, nextIn: 0, buff: null },
+  achievements: []
 });
 
 export function createStore(){
@@ -60,6 +61,7 @@ function migrate(state){
   if (typeof state.meta.intlTreaties === 'undefined') state.meta.intlTreaties = 0;
   if (!Array.isArray(state.events)) state.events = [];
   if (!state.elections) state.elections = { active: false, timeLeft: 0, nextIn: 0, buff: null };
+  if (!Array.isArray(state.achievements)) state.achievements = [];
   return state;
 }
 

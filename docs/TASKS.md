@@ -73,7 +73,7 @@ Acceptance (DoD Faza 3)
 - [ ] Fino podešavanje balansa i scaling krivih (`balance.json`)
 - [ ] Optimizacije rendera (throttling, memoizacija)
 - [ ] Pristupačnost: kontrast, tastatura, ARIA
-- [ ] Sistem dostignuća (min. 10) — UI + logika
+- [~] Sistem dostignuća (min. 10) — UI + logika (trenutno 5)
 - [ ] Smart upgrade preporuke (heuristike; AI posle MVP)
 
 Acceptance (DoD Faza 4)

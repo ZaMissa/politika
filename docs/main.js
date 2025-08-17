@@ -2,7 +2,7 @@ import { createStore, loadGame, saveGame, resetGame, pushEvent } from './state/s
 
 let balanceConfig = {
   tickSeconds: 1,
-  baseRates: { popPerSec: 1, dpPerPop: 0.1, stPerInstitution: 0.05, prPerPop: 0.1, iiPerAgreement: 0.01 },
+  baseRates: { popPerSec: 1, dpPerPop: 0.12, stPerInstitution: 0.05, prPerPop: 0.11, iiPerAgreement: 0.01 },
   institutions: {
     parliament: {
       levels: {
@@ -276,6 +276,20 @@ function updateUI() {
       const b = document.createElement('span'); b.className='badge'; b.textContent = s.elections.buff==='high'?'Elections: HIGH':'Elections: LOW'; badges.appendChild(b);
     }
   }
+
+  // Render achievements
+  const achUl = document.getElementById('achievements-list');
+  if (achUl){
+    achUl.innerHTML='';
+    const defs = balanceConfig?.achievements || {};
+    Object.entries(defs).forEach(([key,def]) => {
+      const li = document.createElement('li');
+      const achieved = (s.achievements||[]).includes(key);
+      li.className = achieved ? 'achieved' : '';
+      li.textContent = `${def.title} — ${def.desc}${achieved?' ✔':''}`;
+      achUl.appendChild(li);
+    });
+  }
 }
 
 function tick(dtSeconds) {
@@ -340,6 +354,7 @@ function startElectionCycle(s){
   const eff = high ? conf.effects.high : conf.effects.low;
   s.resources.st += eff.stDelta || 0;
   pushEvent(s, high ? `Izbori: visoka izlaznost (${Math.round(turnout*100)}%)` : `Izbori: niska izlaznost (${Math.round(turnout*100)}%)`);
+  if (high) checkAchievements(s);
 }
 
 let last = 0; let acc = 0; let saveAcc = 0; const TICK = 1/60;
@@ -393,6 +408,7 @@ async function init() {
     const stGain = balanceConfig?.executive?.presidency?.levels?.[1]?.effects?.st ?? 0;
     s.resources.st += stGain;
     pushEvent(s, 'Osnovano Predsedništvo (lvl 1)');
+    checkAchievements(s);
     store.setState(s);
     showFloatGain(`+${stGain} ST`, btnPres);
     updateUI();
@@ -408,6 +424,7 @@ async function init() {
     s.policies.ministries = Array.isArray(s.policies.ministries) ? s.policies.ministries : [];
     s.policies.ministries.push('education');
     pushEvent(s, 'Osnovano Ministarstvo obrazovanja (+20% DP)');
+    checkAchievements(s);
     store.setState(s);
     updateUI();
   });
@@ -423,6 +440,7 @@ async function init() {
     s.institutions.courts = next;
     s.resources.st += cfg.effects?.st ?? 0;
     pushEvent(s, `Unapređeni Sudovi (lvl ${next})`);
+    checkAchievements(s);
     store.setState(s);
     updateUI();
   });
@@ -442,6 +460,7 @@ async function init() {
       s.resources.dp -= cost;
       s.policies.rights.push(key);
       pushEvent(s, `Usvojena politika prava: ${key}`);
+      checkAchievements(s);
       store.setState(s);
       updateUI();
     });
@@ -456,6 +475,7 @@ async function init() {
     const stGain = balanceConfig?.laws?.simple?.effects?.st ?? 0;
     s.resources.st += stGain; // efekat iz konfiguracije
     pushEvent(s, 'Usvojen Simple Law');
+    checkAchievements(s);
     // Advance tutorial if on step 2
     if (!s.meta.tutorialDone && (s.meta.tutorialStep||0) === 2) {
       s.meta.tutorialStep = 3;
@@ -530,6 +550,18 @@ function getUnlockedConcepts(s){
   };
   (s.policies?.rights || []).forEach(r => { const k = rightsMap[r]; if (k) set.add(k); });
   return Array.from(set);
+}
+
+function checkAchievements(s){
+  const defs = balanceConfig?.achievements || {};
+  const have = new Set(s.achievements||[]);
+  const add = key => { if (!have.has(key)) { have.add(key); pushEvent(s, `Dostignuće: ${(defs[key]?.title)||key}`); } };
+  if ((s.institutions.parliament||0) >= 1) add('first_parliament');
+  if ((s.meta.simpleLaws||0) >= 1) add('first_law');
+  if ((s.institutions.parliament||0) >= 1 && (s.institutions.presidency||0) >= 1 && (s.institutions.courts||0) >= 1) add('tri_vlasti');
+  if ((s.policies?.ministries||[]).includes('education')) add('edu_ministry');
+  if (s.elections?.buff === 'high') add('elections_high');
+  s.achievements = Array.from(have);
 }
 
 function initTutorial(){

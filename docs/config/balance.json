@@ -62,6 +62,18 @@
       }
     }
   }
+  ,
+  "achievements": {
+    "first_parliament": { "title": "Prvi parlament", "desc": "Kupi prvi nivo parlamenta" },
+    "first_law": { "title": "Prvi zakon", "desc": "Usvoji Simple Law" },
+    "tri_vlasti": { "title": "Podela vlasti", "desc": "Aktiviraj sve tri grane vlasti" },
+    "edu_ministry": { "title": "Reforma obrazovanja", "desc": "Osnuj Ministarstvo obrazovanja" },
+    "elections_high": { "title": "Visoka izlaznost", "desc": "Ostvari visoku izlaznost na izborima" }
+  },
+  "balanceTweaks": {
+    "dpPerPop": 0.12,
+    "prPerPop": 0.11
+  }
 }
 
 
