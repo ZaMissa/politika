@@ -96,6 +96,8 @@ function updateUI() {
   el.ii.textContent = format(s.resources.ii);
   el.pop.textContent = format(s.resources.pop);
   el.parliamentLevel.textContent = s.institutions.parliament;
+  const presidencyLevelEl = document.getElementById('presidency-level');
+  if (presidencyLevelEl) presidencyLevelEl.textContent = s.institutions.presidency || 0;
   const cost = nextParliamentCost(s);
   el.parliamentCost.textContent = cost ? `Cena: ${format(cost)} DP` : 'Maksimalan nivo';
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
@@ -105,6 +107,21 @@ function updateUI() {
   if (lawDp) lawDp.textContent = (balanceConfig?.laws?.simple?.costDP ?? 10).toString();
   const lawCost = document.getElementById('simple-law-cost');
   if (lawCost) lawCost.textContent = `Cena: ${(balanceConfig?.laws?.simple?.costDP ?? 10)} DP`;
+
+  // Executive UI
+  const presCost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
+  const presCostEl = document.getElementById('presidency-cost');
+  if (presCostEl) presCostEl.textContent = `Cena: ${presCost} DP`;
+  const btnPres = document.getElementById('btn-buy-presidency');
+  if (btnPres) btnPres.disabled = (s.institutions.presidency || 0) >= 1 || s.resources.dp < presCost;
+
+  const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+  const minEduCostEl = document.getElementById('min-edu-cost');
+  if (minEduCostEl) minEduCostEl.textContent = `Cena: ${minEduCost} DP`;
+  const minEduStatus = document.getElementById('min-edu-status');
+  if (minEduStatus) minEduStatus.textContent = s.policies?.ministries?.includes('education') ? 'osnovano (+20% DP)' : 'nije osnovano';
+  const btnMinEdu = document.getElementById('btn-buy-min-education');
+  if (btnMinEdu) btnMinEdu.disabled = s.policies?.ministries?.includes('education') || s.resources.dp < minEduCost;
 
   // Simple Law button state and tutorial highlight
   const btnSimpleLaw = document.getElementById('btn-simple-law');
@@ -140,7 +157,8 @@ function updateUI() {
 function tick(dtSeconds) {
   const s = store.getState();
   s.resources.pop += balanceConfig.baseRates.popPerSec * dtSeconds;
-  s.resources.dp += (balanceConfig.baseRates.dpPerPop * s.resources.pop) * dtSeconds;
+  const dpMult = 1 + (s.policies?.ministries?.includes('education') ? (balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier ?? 0) : 0);
+  s.resources.dp += (balanceConfig.baseRates.dpPerPop * s.resources.pop * dpMult) * dtSeconds;
   s.resources.st += (balanceConfig.baseRates.stPerInstitution * (
     (s.institutions.parliament > 0 ? 1 : 0) + (s.institutions.presidency > 0 ? 1 : 0) + (s.institutions.courts > 0 ? 1 : 0)
   )) * dtSeconds;
@@ -185,6 +203,35 @@ async function init() {
   if (loaded) { const s = store.getState(); pushEvent(s, 'Progres učitan'); store.setState(s); }
 
   el.btnBuyParliament.addEventListener('click', buyParliament);
+  // Presidency
+  const btnPres = document.getElementById('btn-buy-presidency');
+  btnPres?.addEventListener('click', () => {
+    const s = store.getState();
+    const cost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
+    if (s.resources.dp < cost || (s.institutions.presidency||0) >= 1) return;
+    s.resources.dp -= cost;
+    s.institutions.presidency = 1;
+    const stGain = balanceConfig?.executive?.presidency?.levels?.[1]?.effects?.st ?? 0;
+    s.resources.st += stGain;
+    pushEvent(s, 'Osnovano Predsedništvo (lvl 1)');
+    store.setState(s);
+    showFloatGain(`+${stGain} ST`, btnPres);
+    updateUI();
+  });
+
+  // Ministry of Education
+  const btnMinEdu = document.getElementById('btn-buy-min-education');
+  btnMinEdu?.addEventListener('click', () => {
+    const s = store.getState();
+    const cost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+    if (s.resources.dp < cost || s.policies?.ministries?.includes('education')) return;
+    s.resources.dp -= cost;
+    s.policies.ministries = Array.isArray(s.policies.ministries) ? s.policies.ministries : [];
+    s.policies.ministries.push('education');
+    pushEvent(s, 'Osnovano Ministarstvo obrazovanja (+20% DP)');
+    store.setState(s);
+    updateUI();
+  });
   const btnSimpleLaw = document.getElementById('btn-simple-law');
   btnSimpleLaw.addEventListener('click', () => {
     const s = store.getState();

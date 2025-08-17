@@ -39,7 +39,7 @@ Acceptance (DoD Faza 1)
 
 ### Faza 2 — Institucije i upgrade stabla (3–4 nedelje)
 - [ ] Zakonodavna grana — proširenje nivoa, efekata i cena (`balance.json` + UI u `index.html`/`main.js`)
-- [ ] Izvršna grana — predsedništvo + ministarstva (`main.js` + `balance.json`)
+- [~] Izvršna grana — predsedništvo + ministarstva (`main.js` + `balance.json`)
 - [ ] Sudska grana — sudovi + pravni okviri (`main.js` + `balance.json`)
 - [ ] UI paneli: `InstitutionsView` i `PoliciesView` (DOM sekcije u `index.html` + logika u `main.js`)
 - [ ] Bulk/auto upgrade opcije (heuristika + UI)

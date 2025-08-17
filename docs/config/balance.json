@@ -10,6 +10,16 @@
   "laws": {
     "simple": { "costDP": 10, "effects": { "st": 5 } }
   },
+  "executive": {
+    "presidency": {
+      "levels": {
+        "1": { "costDP": 25, "effects": { "st": 10 } }
+      }
+    },
+    "ministries": {
+      "education": { "costDP": 100, "effects": { "dpMultiplier": 0.2 } }
+    }
+  },
   "institutions": {
     "parliament": {
       "levels": {
