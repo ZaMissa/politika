@@ -8,7 +8,7 @@ const defaultState = () => ({
   era: 'archaic',
   unlocked: { tutorials: [], scenarios: [] },
   settings: { language: 'sr', a11y: { contrast: false, fontScale: 1.0 } },
-  meta: { version: 0, tutorialDone: false, tutorialStep: 0, simpleLaws: 0 },
+  meta: { version: 0, tutorialDone: false, tutorialStep: 0, simpleLaws: 0, constAmend: 0, intlTreaties: 0 },
   events: []
 });
 
@@ -55,6 +55,8 @@ function migrate(state){
   if (typeof state.meta.tutorialDone === 'undefined') state.meta.tutorialDone = false;
   if (typeof state.meta.tutorialStep === 'undefined') state.meta.tutorialStep = 0;
   if (typeof state.meta.simpleLaws === 'undefined') state.meta.simpleLaws = 0;
+  if (typeof state.meta.constAmend === 'undefined') state.meta.constAmend = 0;
+  if (typeof state.meta.intlTreaties === 'undefined') state.meta.intlTreaties = 0;
   if (!Array.isArray(state.events)) state.events = [];
   return state;
 }

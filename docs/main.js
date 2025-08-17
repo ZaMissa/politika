@@ -109,6 +109,16 @@ function updateUI() {
   if (lawDp) lawDp.textContent = (balanceConfig?.laws?.simple?.costDP ?? 10).toString();
   const lawCost = document.getElementById('simple-law-cost');
   if (lawCost) lawCost.textContent = `Cena: ${(balanceConfig?.laws?.simple?.costDP ?? 10)} DP`;
+  const caCost = balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100;
+  const itCost = balanceConfig?.laws?.internationalTreaty?.costDP ?? 500;
+  const caCostEl = document.getElementById('const-amend-cost');
+  const itCostEl = document.getElementById('intl-treaty-cost');
+  if (caCostEl) caCostEl.textContent = `(Cena: ${caCost} DP)`;
+  if (itCostEl) itCostEl.textContent = `(Cena: ${itCost} DP)`;
+  const btnCA = document.getElementById('btn-const-amend');
+  const btnIT = document.getElementById('btn-intl-treaty');
+  if (btnCA) btnCA.disabled = (store.getState().meta.constAmend || 0) >= 1 || store.getState().resources.dp < caCost;
+  if (btnIT) btnIT.disabled = false && store.getState().resources.dp < itCost;
 
   // Executive UI
   const presCost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
@@ -179,7 +189,8 @@ function tick(dtSeconds) {
   const s = store.getState();
   s.resources.pop += balanceConfig.baseRates.popPerSec * dtSeconds;
   const dpMult = 1 + (s.policies?.ministries?.includes('education') ? (balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier ?? 0) : 0);
-  s.resources.dp += (balanceConfig.baseRates.dpPerPop * s.resources.pop * dpMult) * dtSeconds;
+  const lawDpMult = (s.meta.constAmend||0) > 0 ? (balanceConfig?.laws?.constitutionalAmendment?.effects?.dpMultiplier ?? 0) : 0;
+  s.resources.dp += (balanceConfig.baseRates.dpPerPop * s.resources.pop * (dpMult + lawDpMult)) * dtSeconds;
   s.resources.st += (balanceConfig.baseRates.stPerInstitution * (
     (s.institutions.parliament > 0 ? 1 : 0) + (s.institutions.presidency > 0 ? 1 : 0) + (s.institutions.courts > 0 ? 1 : 0)
   )) * dtSeconds;
@@ -195,6 +206,9 @@ function tick(dtSeconds) {
   const stMul = rightsEffects.reduce((acc,e)=> acc + (e.stMultiplier||0), 0);
   const prMul = rightsEffects.reduce((acc,e)=> acc + (e.prMultiplier||0), 0);
   s.resources.pr += (balanceConfig.baseRates.prPerPop * s.resources.pop * (1 + prMul)) * dtSeconds;
+  // International Treaty ii gain
+  const iiPerSec = (s.meta.intlTreaties||0) * (balanceConfig?.laws?.internationalTreaty?.effects?.iiPerSec ?? 0);
+  s.resources.ii += iiPerSec * dtSeconds;
   store.setState(s);
 }
 
@@ -319,6 +333,33 @@ async function init() {
   });
   const btnClearEvents = document.getElementById('btn-clear-events');
   btnClearEvents.addEventListener('click', () => { const s = store.getState(); s.events = []; store.setState(s); });
+  // Constitutional Amendment
+  const btnCA2 = document.getElementById('btn-const-amend');
+  btnCA2?.addEventListener('click', () => {
+    const s = store.getState();
+    const cost = balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100;
+    if (s.resources.dp < cost || (s.meta.constAmend||0) >= 1) return;
+    s.resources.dp -= cost;
+    s.meta.constAmend = (s.meta.constAmend||0) + 1;
+    const eff = balanceConfig?.laws?.constitutionalAmendment?.effects || {};
+    s.resources.st += eff.st || 0;
+    // Apply dpMultiplier persistently via meta flag; handled in dp calc
+    pushEvent(s, 'Usvojena Ustavna izmena');
+    store.setState(s);
+    updateUI();
+  });
+  // International Treaty
+  const btnIT2 = document.getElementById('btn-intl-treaty');
+  btnIT2?.addEventListener('click', () => {
+    const s = store.getState();
+    const cost = balanceConfig?.laws?.internationalTreaty?.costDP ?? 500;
+    if (s.resources.dp < cost) return;
+    s.resources.dp -= cost;
+    s.meta.intlTreaties = (s.meta.intlTreaties||0) + 1;
+    pushEvent(s, 'Potpisan međunarodni sporazum');
+    store.setState(s);
+    updateUI();
+  });
   el.btnSave.addEventListener('click', () => {
     const s = store.getState();
     pushEvent(s, 'Progres sačuvan');

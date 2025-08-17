@@ -8,7 +8,9 @@
     "iiPerAgreement": 0.01
   },
   "laws": {
-    "simple": { "costDP": 10, "effects": { "st": 5 } }
+    "simple": { "costDP": 10, "effects": { "st": 5 } },
+    "constitutionalAmendment": { "costDP": 100, "effects": { "st": 30, "dpMultiplier": 0.05 } },
+    "internationalTreaty": { "costDP": 500, "effects": { "iiPerSec": 0.05, "prMultiplier": 0.1 } }
   },
   "executive": {
     "presidency": {
@@ -40,7 +42,10 @@
     "parliament": {
       "levels": {
         "1": { "costDP": 10, "effects": { "pop": 5, "dpPerSecFlat": 0 } },
-        "2": { "costDP": 50, "effects": { "pop": 15, "dpPerSecFlat": 0.1 } }
+        "2": { "costDP": 50, "effects": { "pop": 15, "dpPerSecFlat": 0.1 } },
+        "3": { "costDP": 1000, "effects": { "pop": 200, "dpPerSecFlat": 0.5 } },
+        "4": { "costDP": 5000, "effects": { "pop": 1000, "dpPerSecFlat": 1.0 } },
+        "5": { "costDP": 20000, "effects": { "pop": 5000, "dpPerSecFlat": 2.0 } }
       }
     }
   }
