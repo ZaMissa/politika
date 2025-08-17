@@ -293,15 +293,15 @@ function updateUI() {
   const presCostHub = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
   const minEduCostHub = balanceConfig?.executive?.ministries?.education?.costDP ?? 100; // ensure only declared once
   const parlNext = (s2.institutions.parliament||0)+1; const parlCfg = balanceConfig?.institutions?.parliament?.levels?.[parlNext];
-  const courtNext = (s2.institutions.courts||0)+1; const courtCfg = balanceConfig?.judicial?.courts?.levels?.[courtNext];
+  const courtNext = (s2.institutions.courts||0)+1; const courtCfgHub = balanceConfig?.judicial?.courts?.levels?.[courtNext];
   const setD = (id,dis)=>{ const b=document.getElementById(id); if(b) b.disabled=!!dis; };
   setD('hub-parl-1', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
   setD('hub-parl-10', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
   setD('hub-parl-max', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
   setD('hub-pres-1', (s2.institutions.presidency||0) >= 1 || s2.resources.dp < presCostHub);
-  setD('hub-court-1', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
-  setD('hub-court-10', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
-  setD('hub-court-max', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
+  setD('hub-court-1', !courtCfgHub || s2.resources.dp < (courtCfgHub?.costDP||Infinity));
+  setD('hub-court-10', !courtCfgHub || s2.resources.dp < (courtCfgHub?.costDP||Infinity));
+  setD('hub-court-max', !courtCfgHub || s2.resources.dp < (courtCfgHub?.costDP||Infinity));
   setD('hub-min-edu', (s2.policies?.ministries||[]).includes('education') || s2.resources.dp < minEduCostHub);
   const rkeys=['civil','human','social','economic','environmental'];
   rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setD(`hub-rights-${k}`, (s2.policies?.rights||[]).includes(k) || s2.resources.dp < cost); });
@@ -316,7 +316,7 @@ function updateUI() {
   const mirrorAriaDisabled = (id) => { const b=document.getElementById(id); if (b) b.setAttribute('aria-disabled', b.disabled ? 'true':'false'); };
   ['hub-parl-1','hub-parl-10','hub-parl-max'].forEach(id=>{ if (parlCfg) setTitle(id, `Parlament: sledeći nivo košta ${parlCfg.costDP} DP`); mirrorAriaDisabled(id); });
   setTitle('hub-pres-1', i18n?.concepts?.presidency || 'Predsedništvo'); mirrorAriaDisabled('hub-pres-1');
-  ['hub-court-1','hub-court-10','hub-court-max'].forEach(id=>{ if (courtCfg) setTitle(id, `Sudovi: sledeći nivo košta ${courtCfg.costDP} DP`); mirrorAriaDisabled(id); });
+  ['hub-court-1','hub-court-10','hub-court-max'].forEach(id=>{ if (courtCfgHub) setTitle(id, `Sudovi: sledeći nivo košta ${courtCfgHub.costDP} DP`); mirrorAriaDisabled(id); });
   setTitle('hub-min-edu', (i18n?.concepts?.presidency||'') + ` — Ministarstvo obrazovanja (+${(balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier??0)*100}% DP)`);
   mirrorAriaDisabled('hub-min-edu');
   rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setTitle(`hub-rights-${k}`, `${(i18n?.concepts?.[`${k}_rights`]||k)} — ${cost} DP`); mirrorAriaDisabled(`hub-rights-${k}`); });
