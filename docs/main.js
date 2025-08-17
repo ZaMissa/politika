@@ -72,6 +72,35 @@ function applyParliamentEffects(levelCfg, state) {
 
 function canAffordDP(state, cost) { return state.resources.dp >= cost; }
 
+function bulkBuyInstitution(kind, count){
+  const s = store.getState();
+  let bought = 0;
+  while (bought < count) {
+    let next, cfg;
+    if (kind === 'parliament'){
+      next = (s.institutions.parliament||0) + 1;
+      cfg = balanceConfig?.institutions?.parliament?.levels?.[next];
+      if (!cfg) break;
+      if (s.resources.dp < cfg.costDP) break;
+      s.resources.dp -= cfg.costDP;
+      s.institutions.parliament = next;
+      applyParliamentEffects(cfg, s);
+    } else if (kind === 'courts'){
+      next = (s.institutions.courts||0) + 1;
+      cfg = balanceConfig?.judicial?.courts?.levels?.[next];
+      if (!cfg) break;
+      if (s.resources.dp < cfg.costDP) break;
+      s.resources.dp -= cfg.costDP;
+      s.institutions.courts = next;
+      s.resources.st += cfg.effects?.st ?? 0;
+    } else {
+      break;
+    }
+    bought++;
+  }
+  if (bought > 0){ pushEvent(s, `Bulk kupovina (${kind}): ${bought}`); store.setState(s); updateUI(); }
+}
+
 function buyParliament() {
   const state = store.getState();
   const next = (state.institutions.parliament || 0) + 1;
@@ -339,6 +368,9 @@ async function init() {
   if (loaded) { const s = store.getState(); pushEvent(s, 'Progres učitan'); store.setState(s); }
 
   el.btnBuyParliament.addEventListener('click', buyParliament);
+  // Bulk parliament
+  document.getElementById('btn-buy-parliament-10')?.addEventListener('click', () => bulkBuyInstitution('parliament', 10));
+  document.getElementById('btn-buy-parliament-max')?.addEventListener('click', () => bulkBuyInstitution('parliament', Infinity));
   // Presidency
   const btnPres = document.getElementById('btn-buy-presidency');
   btnPres?.addEventListener('click', () => {
@@ -383,6 +415,9 @@ async function init() {
     store.setState(s);
     updateUI();
   });
+  // Bulk courts
+  document.getElementById('btn-buy-courts-10')?.addEventListener('click', () => bulkBuyInstitution('courts', 10));
+  document.getElementById('btn-buy-courts-max')?.addEventListener('click', () => bulkBuyInstitution('courts', Infinity));
 
   // Rights purchases
   const rights = ['civil','human','social','economic','environmental'];
