@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="sr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nation Builder: Republic Edition</title>
+    <meta name="description" content="Edukativna idle igra o razvoju republike i političkim pojmovima." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1 id="title">Nation Builder: Republic Edition</h1>
+    </header>
+    <main class="app-main">
+      <section class="hud" aria-label="Resursi">
+        <div class="resource"><span class="label" id="label-dp">DP</span>: <span id="dp">0</span></div>
+        <div class="resource"><span class="label" id="label-st">ST</span>: <span id="st">0</span></div>
+        <div class="resource"><span class="label" id="label-pr">PR</span>: <span id="pr">0</span></div>
+        <div class="resource"><span class="label" id="label-ii">II</span>: <span id="ii">0</span></div>
+        <div class="resource"><span class="label" id="label-pop">POP</span>: <span id="pop">0</span></div>
+      </section>
+
+      <section class="panels" aria-label="Institucije">
+        <div class="panel">
+          <h2>Zakonodavna vlast</h2>
+          <p>Parlament nivo: <span id="parliament-level">0</span></p>
+          <button id="btn-buy-parliament" class="btn-primary">Kupi Parlament (sledeći nivo)</button>
+          <p class="hint" id="parliament-cost">Cena: —</p>
+        </div>
+      </section>
+
+      <section class="actions" aria-label="Akcije">
+        <button id="btn-save">Sačuvaj</button>
+        <button id="btn-reset" class="btn-danger">Reset</button>
+        <span id="save-status" aria-live="polite"></span>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <small>GitHub Pages ready • Client-side only</small>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+  </html>
+
+

@@ -1,0 +1,7 @@
+{
+  "title": "Nation Builder: Republic Edition",
+  "resources": { "dp": "DP", "st": "ST", "pr": "PR", "ii": "II", "pop": "POP" },
+  "actions": { "buyParliament": "Kupi Parlament (sledeći nivo)", "save": "Sačuvaj", "reset": "Reset" }
+}
+
+

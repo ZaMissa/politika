@@ -1,0 +1,8 @@
+{
+  "archaic": { "minPop": 0 },
+  "classical": { "minPop": 1000 },
+  "modern": { "minPop": 10000 },
+  "global": { "minPop": 100000 }
+}
+
+

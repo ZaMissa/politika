@@ -1,0 +1,20 @@
+{
+  "tickSeconds": 1,
+  "baseRates": {
+    "popPerSec": 1,
+    "dpPerPop": 0.1,
+    "stPerInstitution": 0.05,
+    "prPerPop": 0.1,
+    "iiPerAgreement": 0.01
+  },
+  "institutions": {
+    "parliament": {
+      "levels": {
+        "1": { "costDP": 10, "effects": { "pop": 5, "dpPerSecFlat": 0 } },
+        "2": { "costDP": 50, "effects": { "pop": 15, "dpPerSecFlat": 0.1 } }
+      }
+    }
+  }
+}
+
+
