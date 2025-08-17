@@ -474,7 +474,14 @@ async function init() {
   const showInfo = (key, anchorId) => {
     const text = i18n?.concepts?.[key]; if (!text) return;
     const anchor = document.getElementById(anchorId); if (!anchor) return;
-    showFloatGain(text, anchor);
+    const rect = anchor.getBoundingClientRect();
+    const tip = document.createElement('div');
+    tip.className = 'tooltip-bubble';
+    tip.textContent = text;
+    tip.style.left = `${rect.left + window.scrollX + rect.width/2}px`;
+    tip.style.top = `${rect.top + window.scrollY + rect.height + 8}px`;
+    document.body.appendChild(tip);
+    setTimeout(()=> tip.remove(), 3000);
   };
   document.getElementById('info-leg')?.addEventListener('click', () => showInfo('parliament','info-leg'));
   document.getElementById('info-exec')?.addEventListener('click', () => showInfo('presidency','info-exec'));
