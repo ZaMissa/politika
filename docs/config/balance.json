@@ -20,6 +20,22 @@
       "education": { "costDP": 100, "effects": { "dpMultiplier": 0.2 } }
     }
   },
+  "judicial": {
+    "courts": {
+      "levels": {
+        "1": { "costDP": 15, "effects": { "st": 5, "stPerSec": 0.1 } },
+        "2": { "costDP": 75, "effects": { "st": 20, "stPerSec": 0.1 } },
+        "3": { "costDP": 300, "effects": { "st": 75, "stPerSec": 0.2 } }
+      }
+    }
+  },
+  "rights": {
+    "civil": { "costDP": 50, "effects": { "stMultiplier": 0.25, "dpMultiplier": 0.15 } },
+    "human": { "costDP": 100, "effects": { "stMultiplier": 0.30, "dpMultiplier": 0.20 } },
+    "social": { "costDP": 120, "effects": { "stMultiplier": 0.20, "prMultiplier": 0.25 } },
+    "economic": { "costDP": 120, "effects": { "stMultiplier": 0.15, "prMultiplier": 0.30 } },
+    "environmental": { "costDP": 150, "effects": { "stMultiplier": 0.10, "prMultiplier": 0.35 } }
+  },
   "institutions": {
     "parliament": {
       "levels": {

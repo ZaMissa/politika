@@ -98,6 +98,8 @@ function updateUI() {
   el.parliamentLevel.textContent = s.institutions.parliament;
   const presidencyLevelEl = document.getElementById('presidency-level');
   if (presidencyLevelEl) presidencyLevelEl.textContent = s.institutions.presidency || 0;
+  const courtsLevelEl = document.getElementById('courts-level');
+  if (courtsLevelEl) courtsLevelEl.textContent = s.institutions.courts || 0;
   const cost = nextParliamentCost(s);
   el.parliamentCost.textContent = cost ? `Cena: ${format(cost)} DP` : 'Maksimalan nivo';
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
@@ -122,6 +124,25 @@ function updateUI() {
   if (minEduStatus) minEduStatus.textContent = s.policies?.ministries?.includes('education') ? 'osnovano (+20% DP)' : 'nije osnovano';
   const btnMinEdu = document.getElementById('btn-buy-min-education');
   if (btnMinEdu) btnMinEdu.disabled = s.policies?.ministries?.includes('education') || s.resources.dp < minEduCost;
+
+  // Judicial UI
+  const nextCourtLevel = (s.institutions.courts || 0) + 1;
+  const courtCfg = balanceConfig?.judicial?.courts?.levels?.[nextCourtLevel];
+  const courtCostEl = document.getElementById('courts-cost');
+  if (courtCostEl) courtCostEl.textContent = courtCfg ? `Cena: ${courtCfg.costDP} DP` : 'Maksimalan nivo';
+  const btnCourts = document.getElementById('btn-buy-courts');
+  if (btnCourts) btnCourts.disabled = !courtCfg || s.resources.dp < courtCfg.costDP;
+
+  // Rights buttons
+  const rights = ['civil','human','social','economic','environmental'];
+  rights.forEach(key => {
+    const btn = document.getElementById(`btn-rights-${key}`);
+    if (!btn) return;
+    const cost = balanceConfig?.rights?.[key]?.costDP ?? 0;
+    btn.textContent = `${btn.textContent.split(' (')[0]} (${cost} DP)`;
+    const owned = Array.isArray(s.policies?.rights) && s.policies.rights.includes(key);
+    btn.disabled = owned || s.resources.dp < cost;
+  });
 
   // Simple Law button state and tutorial highlight
   const btnSimpleLaw = document.getElementById('btn-simple-law');
@@ -162,7 +183,18 @@ function tick(dtSeconds) {
   s.resources.st += (balanceConfig.baseRates.stPerInstitution * (
     (s.institutions.parliament > 0 ? 1 : 0) + (s.institutions.presidency > 0 ? 1 : 0) + (s.institutions.courts > 0 ? 1 : 0)
   )) * dtSeconds;
-  s.resources.pr += (balanceConfig.baseRates.prPerPop * s.resources.pop) * dtSeconds;
+  // Courts stPerSec bonus
+  const courtLevel = s.institutions.courts || 0;
+  if (courtLevel > 0) {
+    const perSec = balanceConfig?.judicial?.courts?.levels?.[courtLevel]?.effects?.stPerSec ?? 0;
+    s.resources.st += perSec * dtSeconds;
+  }
+  // Rights multipliers
+  const rightsList = Array.isArray(s.policies?.rights) ? s.policies.rights : [];
+  const rightsEffects = rightsList.map(k => balanceConfig?.rights?.[k]?.effects || {});
+  const stMul = rightsEffects.reduce((acc,e)=> acc + (e.stMultiplier||0), 0);
+  const prMul = rightsEffects.reduce((acc,e)=> acc + (e.prMultiplier||0), 0);
+  s.resources.pr += (balanceConfig.baseRates.prPerPop * s.resources.pop * (1 + prMul)) * dtSeconds;
   store.setState(s);
 }
 
@@ -231,6 +263,38 @@ async function init() {
     pushEvent(s, 'Osnovano Ministarstvo obrazovanja (+20% DP)');
     store.setState(s);
     updateUI();
+  });
+
+  // Courts
+  const btnCourts = document.getElementById('btn-buy-courts');
+  btnCourts?.addEventListener('click', () => {
+    const s = store.getState();
+    const next = (s.institutions.courts || 0) + 1;
+    const cfg = balanceConfig?.judicial?.courts?.levels?.[next];
+    if (!cfg || s.resources.dp < cfg.costDP) return;
+    s.resources.dp -= cfg.costDP;
+    s.institutions.courts = next;
+    s.resources.st += cfg.effects?.st ?? 0;
+    pushEvent(s, `Unapređeni Sudovi (lvl ${next})`);
+    store.setState(s);
+    updateUI();
+  });
+
+  // Rights purchases
+  const rights = ['civil','human','social','economic','environmental'];
+  rights.forEach(key => {
+    const btn = document.getElementById(`btn-rights-${key}`);
+    btn?.addEventListener('click', () => {
+      const s = store.getState();
+      const cost = balanceConfig?.rights?.[key]?.costDP ?? 0;
+      s.policies.rights = Array.isArray(s.policies.rights) ? s.policies.rights : [];
+      if (s.resources.dp < cost || s.policies.rights.includes(key)) return;
+      s.resources.dp -= cost;
+      s.policies.rights.push(key);
+      pushEvent(s, `Usvojena politika prava: ${key}`);
+      store.setState(s);
+      updateUI();
+    });
   });
   const btnSimpleLaw = document.getElementById('btn-simple-law');
   btnSimpleLaw.addEventListener('click', () => {
