@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <a href="#main" class="skip-link">Preskoči na sadržaj</a>
     <header class="app-header">
       <h1 id="title">Nation Builder: Republic Edition</h1>
     </header>
-    <main class="app-main">
+    <main class="app-main" id="main">
       <section class="hud" aria-label="Resursi">
         <div class="resource"><span class="label" id="label-dp">DP</span>: <span id="dp">0</span> <span class="rate" id="dp-ps"></span></div>
         <div class="resource"><span class="label" id="label-st">ST</span>: <span id="st">0</span> <span class="rate" id="st-ps"></span></div>
@@ -78,7 +79,7 @@
       <section class="panel" aria-label="Izbori">
         <h2>Izbori</h2>
         <p>Sledeći ciklus za: <span id="election-countdown">—</span></p>
-        <p>Status: <span id="election-status" class="badge">van ciklusa</span></p>
+        <p>Status: <span id="election-status" class="badge" aria-live="polite">van ciklusa</span></p>
         <div class="actions">
           <button id="btn-force-election" class="btn-primary">Raspisi izbore</button>
         </div>
