@@ -84,6 +84,7 @@ function buyParliament() {
   applyParliamentEffects(levelCfg, state);
   pushEvent(state, `Kupljen Parlament nivo ${next}`);
   store.setState(state);
+  updateUI();
 }
 
 function updateUI() {
@@ -203,6 +204,7 @@ async function init() {
     store.setState(s);
     // visual feedback
     showFloatGain(`+${stGain} ST`, document.getElementById('btn-simple-law'));
+    updateUI();
   });
   const btnClearEvents = document.getElementById('btn-clear-events');
   btnClearEvents.addEventListener('click', () => { const s = store.getState(); s.events = []; store.setState(s); });
