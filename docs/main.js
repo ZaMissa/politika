@@ -187,6 +187,18 @@ function updateUI() {
       list.appendChild(li);
     }
   }
+
+  // Render concepts
+  const clist = document.getElementById('concepts-list');
+  if (clist) {
+    clist.innerHTML = '';
+    const unlocked = getUnlockedConcepts(s);
+    unlocked.forEach(key => {
+      const li = document.createElement('li');
+      li.textContent = (i18n?.concepts?.[key]) || key;
+      clist.appendChild(li);
+    });
+  }
 }
 
 function tick(dtSeconds) {
@@ -421,6 +433,18 @@ async function init() {
 
   updateUI();
   requestAnimationFrame(loop);
+}
+
+function getUnlockedConcepts(s){
+  const set = new Set();
+  if ((s.institutions.parliament||0) > 0) { set.add('parliament'); set.add('democracy'); set.add('republic'); set.add('separation_of_powers'); }
+  if ((s.institutions.presidency||0) > 0) { set.add('presidency'); }
+  if ((s.institutions.courts||0) > 0) { set.add('courts'); }
+  const rightsMap = {
+    civil: 'civil_rights', human: 'human_rights', social: 'social_rights', economic: 'economic_rights', environmental: 'environmental_rights'
+  };
+  (s.policies?.rights || []).forEach(r => { const k = rightsMap[r]; if (k) set.add(k); });
+  return Array.from(set);
 }
 
 function initTutorial(){

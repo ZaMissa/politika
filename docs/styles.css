@@ -22,6 +22,8 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .actions{margin-top:16px;display:flex;align-items:center;gap:8px}
 .hint{color:var(--muted);margin-top:6px}
 .rights{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.concepts ul{list-style:disc;margin-left:20px}
+.concepts li{margin:4px 0}
 @media (max-width:720px){.hud{grid-template-columns:repeat(2,1fr)}}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}

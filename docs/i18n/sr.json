@@ -1,7 +1,20 @@
 {
   "title": "Nation Builder: Republic Edition",
   "resources": { "dp": "DP", "st": "ST", "pr": "PR", "ii": "II", "pop": "POP" },
-  "actions": { "buyParliament": "Kupi Parlament (sledeći nivo)", "save": "Sačuvaj", "reset": "Reset" }
+  "actions": { "buyParliament": "Kupi Parlament (sledeći nivo)", "save": "Sačuvaj", "reset": "Reset" },
+  "concepts": {
+    "democracy": "Demokratija je sistem u kome vlast potiče od građana, bilo direktno ili preko predstavnika.",
+    "republic": "Republika je oblik državnog uređenja bez monarha, sa izabranim predstavnicima.",
+    "separation_of_powers": "Podela vlasti na zakonodavnu, izvršnu i sudsku sprečava koncentraciju moći.",
+    "parliament": "Parlament donosi zakone i predstavlja građane.",
+    "presidency": "Predsedništvo sprovodi zakone i vodi izvršnu politiku.",
+    "courts": "Sudovi tumače zakone i štite prava građana.",
+    "civil_rights": "Građanska prava garantuju slobode kao što su govor, okupljanje i zaštita privatnosti.",
+    "human_rights": "Ljudska prava su univerzalna i pripadaju svakom čoveku.",
+    "social_rights": "Socijalna prava obuhvataju pristup obrazovanju, zdravstvu i socijalnoj zaštiti.",
+    "economic_rights": "Ekonomska prava obuhvataju rad, pravičnu zaradu i slobodu preduzetništva.",
+    "environmental_rights": "Ekološka prava štite životnu sredinu za sadašnje i buduće generacije."
+  }
 }
 
 
