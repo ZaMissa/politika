@@ -206,6 +206,36 @@ function updateUI() {
       clist.appendChild(li);
     });
   }
+
+  // Render overview
+  const instList = document.getElementById('inst-list');
+  if (instList) {
+    instList.innerHTML='';
+    const items = [
+      ['Parlament', s.institutions.parliament],
+      ['Predsedništvo', s.institutions.presidency],
+      ['Sudovi', s.institutions.courts]
+    ];
+    items.forEach(([name, lvl]) => { const li = document.createElement('li'); li.textContent = `${name}: lvl ${lvl||0}`; instList.appendChild(li); });
+  }
+  const polList = document.getElementById('policies-list');
+  if (polList){
+    polList.innerHTML='';
+    const rights = (s.policies?.rights||[]).map(r=>r).join(', ');
+    const ministries = (s.policies?.ministries||[]).map(m=>m).join(', ');
+    const ul = polList;
+    const li1 = document.createElement('li'); li1.textContent = `Prava: ${rights || '—'}`; ul.appendChild(li1);
+    const li2 = document.createElement('li'); li2.textContent = `Ministarstva: ${ministries || '—'}`; ul.appendChild(li2);
+  }
+
+  // Render badges (elections)
+  const badges = document.getElementById('badges');
+  if (badges){
+    badges.innerHTML='';
+    if (s.elections?.active) {
+      const b = document.createElement('span'); b.className='badge'; b.textContent = s.elections.buff==='high'?'Elections: HIGH':'Elections: LOW'; badges.appendChild(b);
+    }
+  }
 }
 
 function tick(dtSeconds) {
