@@ -6,12 +6,21 @@
     <title>Nation Builder: Republic Edition</title>
     <meta name="description" content="Edukativna idle igra o razvoju republike i političkim pojmovima." />
     <meta name="theme-color" content="#0e1116" />
+    <link rel="canonical" href="https://zamissa.github.io/politika/" />
+    <meta property="og:title" content="Nation Builder: Republic Edition" />
+    <meta property="og:description" content="Edukativna idle igra o razvoju republike i političkim pojmovima." />
+    <meta property="og:url" content="https://zamissa.github.io/politika/" />
+    <meta property="og:type" content="website" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <a href="#main" class="skip-link">Preskoči na sadržaj</a>
     <header class="app-header">
       <h1 id="title">Nation Builder: Republic Edition</h1>
+      <nav aria-label="Glavna navigacija">
+        <a href="#concepts">Pojmovi</a>
+        <a href="#help">Pomoć</a>
+      </nav>
     </header>
     <main class="app-main" id="main">
       <section class="hud" aria-label="Resursi">
@@ -96,8 +105,8 @@
         </div>
       </section>
 
-      <section class="panel" aria-label="Pojmovi">
-        <h2>Pojmovi</h2>
+      <section class="panel" aria-label="Pojmovi" id="concepts-panel">
+        <h2 id="concepts">Pojmovi</h2>
         <div id="concepts" class="concepts">
           <ul id="concepts-list"></ul>
         </div>
@@ -175,6 +184,18 @@
           <span class="btn-primary" role="button" tabindex="0">Import</span>
         </label>
         <span id="save-status" aria-live="polite"></span>
+      </section>
+
+      <section class="panel" aria-label="Pomoć" id="help">
+        <h2>Pomoć</h2>
+        <ul>
+          <li>Resursi se povećavaju pasivno; ubrzaj razvoj kupovinom institucija i politika.</li>
+          <li>Zakoni: Simple Law (brz efekat), Ustavna izmena (trajni bonus), Međunarodni sporazum (II i PR).</li>
+          <li>Izbori: visoka izlaznost donosi privremene bonuse.</li>
+          <li>Pregled i Kontrolni centar nude brze prečice.</li>
+          <li>Export/Import: preuzmi/učitaj sejv kao JSON.</li>
+          <li>Za definicije pojmova vidi <a href="#concepts">Pojmovi</a>.</li>
+        </ul>
       </section>
     </main>
 
