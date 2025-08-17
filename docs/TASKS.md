@@ -47,6 +47,7 @@ Acceptance (DoD Faza 1)
 - [~] Sudska grana — sudovi + pravni okviri (`main.js` + `balance.json`)
 - [ ] UI paneli: `InstitutionsView` i `PoliciesView` (DOM sekcije u `index.html` + logika u `main.js`)
 - [x] Pregledni panel za institucije i politike (osnovna verzija)
+- [x] Prečice iz pregleda na panele (anchors)
 - [~] Bulk/auto upgrade opcije (heuristika + UI)
 
 ### Događaji (Events)

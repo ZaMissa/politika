@@ -267,6 +267,26 @@ function updateUI() {
     const li1 = document.createElement('li'); li1.textContent = `Prava: ${rights || '—'}`; ul.appendChild(li1);
     const li2 = document.createElement('li'); li2.textContent = `Ministarstva: ${ministries || '—'}`; ul.appendChild(li2);
   }
+  // Overview shortcuts
+  const shortcuts = [
+    ['inst-list','Parlament','panel-legislative'],
+    ['inst-list','Predsedništvo','panel-executive'],
+    ['inst-list','Sudovi','panel-judicial']
+  ];
+  // Convert items to anchors for quick jump
+  const instUl = document.getElementById('inst-list');
+  if (instUl){
+    [...instUl.children].forEach(li => {
+      const t = li.textContent || '';
+      const map = { 'Parlament': 'panel-legislative', 'Predsedništvo': 'panel-executive', 'Sudovi': 'panel-judicial' };
+      const key = Object.keys(map).find(k => t.startsWith(k));
+      if (key){
+        const a = document.createElement('a'); a.href = `#${map[key]}`; a.textContent = t; a.style.color = 'inherit'; a.style.textDecoration = 'underline';
+        li.textContent = '';
+        li.appendChild(a);
+      }
+    });
+  }
 
   // Render badges (elections)
   const badges = document.getElementById('badges');
