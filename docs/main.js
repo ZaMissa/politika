@@ -305,11 +305,11 @@ function updateUI() {
   setD('hub-min-edu', (s2.policies?.ministries||[]).includes('education') || s2.resources.dp < minEduCostHub);
   const rkeys=['civil','human','social','economic','environmental'];
   rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setD(`hub-rights-${k}`, (s2.policies?.rights||[]).includes(k) || s2.resources.dp < cost); });
-  const caCost = balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100;
-  const itCost = balanceConfig?.laws?.internationalTreaty?.costDP ?? 500;
+  const caCostHub = balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100;
+  const itCostHub = balanceConfig?.laws?.internationalTreaty?.costDP ?? 500;
   setD('hub-law-simple', s2.resources.dp < (balanceConfig?.laws?.simple?.costDP ?? 10));
-  setD('hub-law-const', (s2.meta.constAmend||0)>=1 || s2.resources.dp < caCost);
-  setD('hub-law-treaty', s2.resources.dp < itCost);
+  setD('hub-law-const', (s2.meta.constAmend||0)>=1 || s2.resources.dp < caCostHub);
+  setD('hub-law-treaty', s2.resources.dp < itCostHub);
 
   // Titles/tooltips and aria-disabled mirroring
   const setTitle = (id, text) => { const b=document.getElementById(id); if(b) b.title=text; };
@@ -321,8 +321,8 @@ function updateUI() {
   mirrorAriaDisabled('hub-min-edu');
   rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setTitle(`hub-rights-${k}`, `${(i18n?.concepts?.[`${k}_rights`]||k)} — ${cost} DP`); mirrorAriaDisabled(`hub-rights-${k}`); });
   setTitle('hub-law-simple', `${i18n?.concepts?.simple_law||'Simple Law'} — ${(balanceConfig?.laws?.simple?.costDP ?? 10)} DP`); mirrorAriaDisabled('hub-law-simple');
-  setTitle('hub-law-const', `${i18n?.concepts?.constitutional_amendment||'Constitutional Amendment'} — ${caCost} DP`); mirrorAriaDisabled('hub-law-const');
-  setTitle('hub-law-treaty', `${i18n?.concepts?.international_treaty||'International Treaty'} — ${itCost} DP`); mirrorAriaDisabled('hub-law-treaty');
+  setTitle('hub-law-const', `${i18n?.concepts?.constitutional_amendment||'Constitutional Amendment'} — ${caCostHub} DP`); mirrorAriaDisabled('hub-law-const');
+  setTitle('hub-law-treaty', `${i18n?.concepts?.international_treaty||'International Treaty'} — ${itCostHub} DP`); mirrorAriaDisabled('hub-law-treaty');
 
   // Render badges (elections)
   const badges = document.getElementById('badges');
