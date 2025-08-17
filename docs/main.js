@@ -97,6 +97,18 @@ function updateUI() {
   const cost = nextParliamentCost(s);
   el.parliamentCost.textContent = cost ? `Cena: ${format(cost)} DP` : 'Maksimalan nivo';
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
+
+  // Simple Law button state and tutorial highlight
+  const btnSimpleLaw = document.getElementById('btn-simple-law');
+  const canBuyLaw = s.resources.dp >= 10;
+  btnSimpleLaw.disabled = !canBuyLaw;
+  const step = s.meta.tutorialStep || 0;
+  if (!s.meta.tutorialDone && step === 2) {
+    btnSimpleLaw.classList.add('highlight');
+    tut.root.setAttribute('aria-hidden','true'); // do not block interaction when action is expected
+  } else {
+    btnSimpleLaw.classList.remove('highlight');
+  }
 }
 
 function tick(dtSeconds) {
@@ -153,6 +165,12 @@ async function init() {
     if (s.resources.dp < cost) return;
     s.resources.dp -= cost;
     s.meta.simpleLaws = (s.meta.simpleLaws || 0) + 1;
+    // Advance tutorial if on step 2
+    if (!s.meta.tutorialDone && (s.meta.tutorialStep||0) === 2) {
+      s.meta.tutorialStep = 3;
+      s.meta.tutorialDone = true;
+      tut.root.setAttribute('aria-hidden','true');
+    }
     store.setState(s);
   });
   el.btnSave.addEventListener('click', () => { saveGame(store.getState()); el.saveStatus.textContent = 'Sačuvano'; setTimeout(()=> el.saveStatus.textContent='', 1200); });

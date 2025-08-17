@@ -23,4 +23,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .overlay-content{background:var(--card);border:1px solid var(--border);border-radius:10px;max-width:560px;width:92vw;padding:16px}
 .overlay-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
 
+.highlight{outline:2px solid var(--primary); box-shadow:0 0 0 4px rgba(79,140,255,.25);}
+
 
