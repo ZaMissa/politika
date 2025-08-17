@@ -172,11 +172,11 @@ function updateUI() {
   if (btnIT) btnIT.disabled = false && store.getState().resources.dp < itCost;
 
   // Executive UI
-  const presCost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
+  const presCostExec = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
   const presCostEl = document.getElementById('presidency-cost');
-  if (presCostEl) presCostEl.textContent = `Cena: ${presCost} DP`;
+  if (presCostEl) presCostEl.textContent = `Cena: ${presCostExec} DP`;
   const btnPres = document.getElementById('btn-buy-presidency');
-  if (btnPres) btnPres.disabled = (s.institutions.presidency || 0) >= 1 || s.resources.dp < presCost;
+  if (btnPres) btnPres.disabled = (s.institutions.presidency || 0) >= 1 || s.resources.dp < presCostExec;
 
   const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
   const minEduCostEl = document.getElementById('min-edu-cost');
