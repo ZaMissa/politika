@@ -290,7 +290,7 @@ function updateUI() {
 
   // Control hub state (disable when not affordable/already owned)
   const s2 = s;
-  const presCost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
+  const presCostHub = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
   const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
   const parlNext = (s2.institutions.parliament||0)+1; const parlCfg = balanceConfig?.institutions?.parliament?.levels?.[parlNext];
   const courtNext = (s2.institutions.courts||0)+1; const courtCfg = balanceConfig?.judicial?.courts?.levels?.[courtNext];
@@ -298,7 +298,7 @@ function updateUI() {
   setD('hub-parl-1', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
   setD('hub-parl-10', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
   setD('hub-parl-max', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
-  setD('hub-pres-1', (s2.institutions.presidency||0) >= 1 || s2.resources.dp < presCost);
+  setD('hub-pres-1', (s2.institutions.presidency||0) >= 1 || s2.resources.dp < presCostHub);
   setD('hub-court-1', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
   setD('hub-court-10', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
   setD('hub-court-max', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
