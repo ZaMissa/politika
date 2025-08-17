@@ -585,6 +585,12 @@ async function init() {
     el.saveStatus.textContent = 'Sačuvano'; setTimeout(()=> el.saveStatus.textContent='', 1200);
   });
   el.btnReset.addEventListener('click', () => {
+    // open confirm overlay
+    document.getElementById('confirm-reset')?.setAttribute('aria-hidden','false');
+  });
+  document.getElementById('reset-cancel')?.addEventListener('click', () => { document.getElementById('confirm-reset')?.setAttribute('aria-hidden','true'); });
+  document.getElementById('reset-confirm')?.addEventListener('click', () => {
+    document.getElementById('confirm-reset')?.setAttribute('aria-hidden','true');
     resetGame(store);
     const s = store.getState();
     pushEvent(s, 'Reset stanja');

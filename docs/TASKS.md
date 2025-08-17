@@ -88,6 +88,7 @@ Acceptance (DoD Faza 4)
 - [ ] Dodati link u `README.md`
 - [ ] Ažurirati `DEVELOPMENTPLAN.md` statusima i eventualnim pivotima
 - [x] Export/Import sejva (JSON)
+- [x] Potvrda reseta (overlay dijalog)
 
 Acceptance (DoD Faza 5)
 - [ ] Pages produkcija i (opciono) staging zelen
