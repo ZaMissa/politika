@@ -73,6 +73,7 @@ Acceptance (DoD Faza 3)
 ### Faza 4 — Polish, balans i performanse (2–3 nedelje)
 - [ ] UX poboljšanja (animacije, tranzicije; bez narušavanja performansi)
 - [ ] Fino podešavanje balansa i scaling krivih (`balance.json`)
+- [~] Fino podešavanje balansa i scaling krivih (`balance.json`)
 - [ ] Optimizacije rendera (throttling, memoizacija)
 - [ ] Pristupačnost: kontrast, tastatura, ARIA
 - [~] Sistem dostignuća (min. 10) — UI + logika (trenutno 10+)

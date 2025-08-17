@@ -19,46 +19,46 @@
       }
     },
     "ministries": {
-      "education": { "costDP": 100, "effects": { "dpMultiplier": 0.2 } }
+      "education": { "costDP": 100, "effects": { "dpMultiplier": 0.15 } }
     }
   },
   "judicial": {
     "courts": {
       "levels": {
-        "1": { "costDP": 15, "effects": { "st": 5, "stPerSec": 0.1 } },
-        "2": { "costDP": 75, "effects": { "st": 20, "stPerSec": 0.1 } },
-        "3": { "costDP": 300, "effects": { "st": 75, "stPerSec": 0.2 } }
+        "1": { "costDP": 20, "effects": { "st": 8, "stPerSec": 0.12 } },
+        "2": { "costDP": 100, "effects": { "st": 25, "stPerSec": 0.18 } },
+        "3": { "costDP": 400, "effects": { "st": 80, "stPerSec": 0.25 } }
       }
     }
   },
   "rights": {
-    "civil": { "costDP": 50, "effects": { "stMultiplier": 0.25, "dpMultiplier": 0.15 } },
-    "human": { "costDP": 100, "effects": { "stMultiplier": 0.30, "dpMultiplier": 0.20 } },
-    "social": { "costDP": 120, "effects": { "stMultiplier": 0.20, "prMultiplier": 0.25 } },
-    "economic": { "costDP": 120, "effects": { "stMultiplier": 0.15, "prMultiplier": 0.30 } },
-    "environmental": { "costDP": 150, "effects": { "stMultiplier": 0.10, "prMultiplier": 0.35 } }
+    "civil": { "costDP": 40, "effects": { "stMultiplier": 0.18, "dpMultiplier": 0.12 } },
+    "human": { "costDP": 90, "effects": { "stMultiplier": 0.24, "dpMultiplier": 0.16 } },
+    "social": { "costDP": 110, "effects": { "stMultiplier": 0.16, "prMultiplier": 0.22 } },
+    "economic": { "costDP": 110, "effects": { "stMultiplier": 0.12, "prMultiplier": 0.26 } },
+    "environmental": { "costDP": 140, "effects": { "stMultiplier": 0.08, "prMultiplier": 0.30 } }
   },
   "institutions": {
     "parliament": {
       "levels": {
         "1": { "costDP": 10, "effects": { "pop": 5, "dpPerSecFlat": 0 } },
         "2": { "costDP": 50, "effects": { "pop": 15, "dpPerSecFlat": 0.1 } },
-        "3": { "costDP": 1000, "effects": { "pop": 200, "dpPerSecFlat": 0.5 } },
-        "4": { "costDP": 5000, "effects": { "pop": 1000, "dpPerSecFlat": 1.0 } },
-        "5": { "costDP": 20000, "effects": { "pop": 5000, "dpPerSecFlat": 2.0 } }
+        "3": { "costDP": 600, "effects": { "pop": 120, "dpPerSecFlat": 0.4 } },
+        "4": { "costDP": 3000, "effects": { "pop": 600, "dpPerSecFlat": 0.8 } },
+        "5": { "costDP": 12000, "effects": { "pop": 2500, "dpPerSecFlat": 1.6 } }
       }
     }
   },
   "events": {
     "elections": {
-      "cycleSeconds": 60,
-      "durationSeconds": 30,
-      "baseTurnout": 0.4,
-      "turnoutStabilityFactor": 0.003,
+      "cycleSeconds": 45,
+      "durationSeconds": 20,
+      "baseTurnout": 0.45,
+      "turnoutStabilityFactor": 0.0025,
       "highTurnoutThreshold": 0.6,
       "effects": {
-        "high": { "stDelta": 20, "dpMultiplier": 0.1 },
-        "low": { "stDelta": -15 }
+        "high": { "stDelta": 15, "dpMultiplier": 0.08 },
+        "low": { "stDelta": -10 }
       }
     }
   }
