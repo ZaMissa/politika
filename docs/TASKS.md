@@ -28,6 +28,7 @@ Legenda:
 - [x] Minimalni HUD u `docs/index.html` (DP/ST/PR/II/POP)
 - [x] Osnovni balans i konfiguracija u `docs/config/balance.json`
 - [x] Kupovina prvog nivoa Parlamenta u `docs/main.js`
+- [x] Events feed panel (UI + logika događaja)
 - [ ] Tutorijal „Democracy 101” (osnovni onboarding panel)
 - [ ] Minimalni stil dizajn tokeni u `styles.css` (sekcija tokens)
 
@@ -38,9 +39,12 @@ Acceptance (DoD Faza 1)
 - [x] Ažurirani `README.md` i `DEVELOPMENTPLAN.md`
 
 ### Faza 2 — Institucije i upgrade stabla (3–4 nedelje)
-- [ ] Zakonodavna grana — proširenje nivoa, efekata i cena (`balance.json` + UI u `index.html`/`main.js`)
+- [~] Zakonodavna grana — proširenje nivoa, efekata i cena (`balance.json` + UI u `index.html`/`main.js`)
+- [x] Simple Law akcija (cena/efekti iz konfiguracije)
+- [ ] Constitutional Amendment akcija (konfigurabilno)
+- [ ] International Treaty akcija (konfigurabilno)
 - [~] Izvršna grana — predsedništvo + ministarstva (`main.js` + `balance.json`)
-- [ ] Sudska grana — sudovi + pravni okviri (`main.js` + `balance.json`)
+- [~] Sudska grana — sudovi + pravni okviri (`main.js` + `balance.json`)
 - [ ] UI paneli: `InstitutionsView` i `PoliciesView` (DOM sekcije u `index.html` + logika u `main.js`)
 - [ ] Bulk/auto upgrade opcije (heuristika + UI)
 
