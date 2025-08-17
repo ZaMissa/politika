@@ -561,6 +561,15 @@ function checkAchievements(s){
   if ((s.institutions.parliament||0) >= 1 && (s.institutions.presidency||0) >= 1 && (s.institutions.courts||0) >= 1) add('tri_vlasti');
   if ((s.policies?.ministries||[]).includes('education')) add('edu_ministry');
   if (s.elections?.buff === 'high') add('elections_high');
+  if ((s.institutions.courts||0) >= 3) add('courts_lvl3');
+  if ((s.policies?.rights||[]).length >= 5) add('all_rights');
+  if ((s.meta.constAmend||0) >= 1) add('const_amended');
+  if ((s.meta.intlTreaties||0) >= 1) add('treaty_signed');
+  // rate and stock targets
+  const dpPs = (balanceConfig.baseRates.dpPerPop * s.resources.pop * (1 + (s.policies?.ministries?.includes('education') ? (balanceConfig?.executive?.ministries?.education?.effects?.dpMultiplier ?? 0) : 0) + ((s.meta.constAmend||0) > 0 ? (balanceConfig?.laws?.constitutionalAmendment?.effects?.dpMultiplier ?? 0) : 0) + (s.elections?.active && s.elections.buff==='high' ? (balanceConfig?.events?.elections?.effects?.high?.dpMultiplier ?? 0) : 0)));
+  if (dpPs >= 10) add('dp_rate_10');
+  if (s.resources.dp >= 1000) add('dp_1000');
+  if (s.resources.pop >= 1000) add('pop_1000');
   s.achievements = Array.from(have);
 }
 

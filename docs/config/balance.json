@@ -2,9 +2,9 @@
   "tickSeconds": 1,
   "baseRates": {
     "popPerSec": 1,
-    "dpPerPop": 0.1,
+    "dpPerPop": 0.12,
     "stPerInstitution": 0.05,
-    "prPerPop": 0.1,
+    "prPerPop": 0.11,
     "iiPerAgreement": 0.01
   },
   "laws": {
@@ -68,7 +68,14 @@
     "first_law": { "title": "Prvi zakon", "desc": "Usvoji Simple Law" },
     "tri_vlasti": { "title": "Podela vlasti", "desc": "Aktiviraj sve tri grane vlasti" },
     "edu_ministry": { "title": "Reforma obrazovanja", "desc": "Osnuj Ministarstvo obrazovanja" },
-    "elections_high": { "title": "Visoka izlaznost", "desc": "Ostvari visoku izlaznost na izborima" }
+    "elections_high": { "title": "Visoka izlaznost", "desc": "Ostvari visoku izlaznost na izborima" },
+    "courts_lvl3": { "title": "Vrhovni sud", "desc": "Dostigni nivo 3 sudova" },
+    "all_rights": { "title": "Povelja prava", "desc": "Usvoji svih 5 kategorija prava" },
+    "const_amended": { "title": "Ustavna reforma", "desc": "Usvoj ustavnu izmenu" },
+    "treaty_signed": { "title": "Diplomata", "desc": "Potpiši međunarodni sporazum" },
+    "dp_1000": { "title": "Budžet 1K", "desc": "Dostigni 1,000 DP" },
+    "pop_1000": { "title": "Hiljadu građana", "desc": "Dostigni 1,000 POP" },
+    "dp_rate_10": { "title": "Zamašnjak", "desc": "Dostigni 10 DP/s" }
   },
   "balanceTweaks": {
     "dpPerPop": 0.12,
