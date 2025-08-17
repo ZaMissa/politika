@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nation Builder: Republic Edition</title>
     <meta name="description" content="Edukativna idle igra o razvoju republike i političkim pojmovima." />
+    <meta name="theme-color" content="#0e1116" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -119,6 +120,49 @@
       <section class="panel" aria-label="Dostignuća">
         <h2>Dostignuća</h2>
         <ul id="achievements-list"></ul>
+      </section>
+
+      <section class="panel" aria-label="Kontrolni centar" id="control-hub">
+        <h2>Kontrolni centar</h2>
+        <div class="hub">
+          <div>
+            <h3>Institucije</h3>
+            <div class="btn-group">
+              <button id="hub-parl-1" class="btn-primary">Parlament +1</button>
+              <button id="hub-parl-10" class="btn-primary">Parlament +10</button>
+              <button id="hub-parl-max" class="btn-primary">Parlament Max</button>
+            </div>
+            <div class="btn-group">
+              <button id="hub-pres-1" class="btn-primary">Predsedništvo lvl 1</button>
+            </div>
+            <div class="btn-group">
+              <button id="hub-court-1" class="btn-primary">Sudovi +1</button>
+              <button id="hub-court-10" class="btn-primary">Sudovi +10</button>
+              <button id="hub-court-max" class="btn-primary">Sudovi Max</button>
+            </div>
+          </div>
+          <div>
+            <h3>Politike</h3>
+            <div class="btn-group">
+              <button id="hub-min-edu" class="btn-primary">Ministarstvo obrazovanja</button>
+            </div>
+            <div class="btn-group rights">
+              <button id="hub-rights-civil" class="btn-primary">Civil</button>
+              <button id="hub-rights-human" class="btn-primary">Human</button>
+              <button id="hub-rights-social" class="btn-primary">Social</button>
+              <button id="hub-rights-economic" class="btn-primary">Economic</button>
+              <button id="hub-rights-environmental" class="btn-primary">Environmental</button>
+            </div>
+          </div>
+          <div>
+            <h3>Zakoni</h3>
+            <div class="btn-group">
+              <button id="hub-law-simple" class="btn-primary">Simple Law</button>
+              <button id="hub-law-const" class="btn-primary">Ustavna izmena</button>
+              <button id="hub-law-treaty" class="btn-primary">Međunarodni sporazum</button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="actions" aria-label="Akcije">

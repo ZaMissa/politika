@@ -288,6 +288,29 @@ function updateUI() {
     });
   }
 
+  // Control hub state (disable when not affordable/already owned)
+  const s2 = s;
+  const presCost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
+  const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+  const parlNext = (s2.institutions.parliament||0)+1; const parlCfg = balanceConfig?.institutions?.parliament?.levels?.[parlNext];
+  const courtNext = (s2.institutions.courts||0)+1; const courtCfg = balanceConfig?.judicial?.courts?.levels?.[courtNext];
+  const setD = (id,dis)=>{ const b=document.getElementById(id); if(b) b.disabled=!!dis; };
+  setD('hub-parl-1', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
+  setD('hub-parl-10', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
+  setD('hub-parl-max', !parlCfg || s2.resources.dp < (parlCfg?.costDP||Infinity));
+  setD('hub-pres-1', (s2.institutions.presidency||0) >= 1 || s2.resources.dp < presCost);
+  setD('hub-court-1', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
+  setD('hub-court-10', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
+  setD('hub-court-max', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
+  setD('hub-min-edu', (s2.policies?.ministries||[]).includes('education') || s2.resources.dp < minEduCost);
+  const rkeys=['civil','human','social','economic','environmental'];
+  rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setD(`hub-rights-${k}`, (s2.policies?.rights||[]).includes(k) || s2.resources.dp < cost); });
+  const caCost = balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100;
+  const itCost = balanceConfig?.laws?.internationalTreaty?.costDP ?? 500;
+  setD('hub-law-simple', s2.resources.dp < (balanceConfig?.laws?.simple?.costDP ?? 10));
+  setD('hub-law-const', (s2.meta.constAmend||0)>=1 || s2.resources.dp < caCost);
+  setD('hub-law-treaty', s2.resources.dp < itCost);
+
   // Render badges (elections)
   const badges = document.getElementById('badges');
   if (badges){
@@ -417,6 +440,21 @@ async function init() {
   // Bulk parliament
   document.getElementById('btn-buy-parliament-10')?.addEventListener('click', () => bulkBuyInstitution('parliament', 10));
   document.getElementById('btn-buy-parliament-max')?.addEventListener('click', () => bulkBuyInstitution('parliament', Infinity));
+  // Control hub bindings (delegating to existing functions)
+  document.getElementById('hub-parl-1')?.addEventListener('click', buyParliament);
+  document.getElementById('hub-parl-10')?.addEventListener('click', () => bulkBuyInstitution('parliament', 10));
+  document.getElementById('hub-parl-max')?.addEventListener('click', () => bulkBuyInstitution('parliament', Infinity));
+  document.getElementById('hub-pres-1')?.addEventListener('click', () => document.getElementById('btn-buy-presidency')?.click());
+  document.getElementById('hub-court-1')?.addEventListener('click', () => document.getElementById('btn-buy-courts')?.click());
+  document.getElementById('hub-court-10')?.addEventListener('click', () => bulkBuyInstitution('courts', 10));
+  document.getElementById('hub-court-max')?.addEventListener('click', () => bulkBuyInstitution('courts', Infinity));
+  document.getElementById('hub-min-edu')?.addEventListener('click', () => document.getElementById('btn-buy-min-education')?.click());
+  ['civil','human','social','economic','environmental'].forEach(k=>{
+    document.getElementById(`hub-rights-${k}`)?.addEventListener('click', () => document.getElementById(`btn-rights-${k}`)?.click());
+  });
+  document.getElementById('hub-law-simple')?.addEventListener('click', () => document.getElementById('btn-simple-law')?.click());
+  document.getElementById('hub-law-const')?.addEventListener('click', () => document.getElementById('btn-const-amend')?.click());
+  document.getElementById('hub-law-treaty')?.addEventListener('click', () => document.getElementById('btn-intl-treaty')?.click());
   // Presidency
   const btnPres = document.getElementById('btn-buy-presidency');
   btnPres?.addEventListener('click', () => {

@@ -32,6 +32,8 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .overview{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .overview ul{margin:0;padding-left:20px}
 .achieved{color:#6cff6c}
+.hub{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media (max-width:900px){.hub{grid-template-columns:1fr}}
 @media (max-width:720px){.hud{grid-template-columns:repeat(2,1fr)}}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
