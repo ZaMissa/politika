@@ -7,6 +7,9 @@
     "prPerPop": 0.1,
     "iiPerAgreement": 0.01
   },
+  "laws": {
+    "simple": { "costDP": 10, "effects": { "st": 5 } }
+  },
   "institutions": {
     "parliament": {
       "levels": {

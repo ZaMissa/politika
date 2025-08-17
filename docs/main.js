@@ -100,6 +100,10 @@ function updateUI() {
   el.btnBuyParliament.disabled = !cost || !canAffordDP(s, cost);
   const lawCount = document.getElementById('simple-law-count');
   if (lawCount) lawCount.textContent = (s.meta.simpleLaws || 0).toString();
+  const lawDp = document.getElementById('simple-law-dp');
+  if (lawDp) lawDp.textContent = (balanceConfig?.laws?.simple?.costDP ?? 10).toString();
+  const lawCost = document.getElementById('simple-law-cost');
+  if (lawCost) lawCost.textContent = `Cena: ${(balanceConfig?.laws?.simple?.costDP ?? 10)} DP`;
 
   // Simple Law button state and tutorial highlight
   const btnSimpleLaw = document.getElementById('btn-simple-law');
@@ -183,11 +187,12 @@ async function init() {
   const btnSimpleLaw = document.getElementById('btn-simple-law');
   btnSimpleLaw.addEventListener('click', () => {
     const s = store.getState();
-    const cost = 10;
+    const cost = balanceConfig?.laws?.simple?.costDP ?? 10;
     if (s.resources.dp < cost) return;
     s.resources.dp -= cost;
     s.meta.simpleLaws = (s.meta.simpleLaws || 0) + 1;
-    s.resources.st += 5; // mali efekat kako bi se videla posledica
+    const stGain = balanceConfig?.laws?.simple?.effects?.st ?? 0;
+    s.resources.st += stGain; // efekat iz konfiguracije
     pushEvent(s, 'Usvojen Simple Law');
     // Advance tutorial if on step 2
     if (!s.meta.tutorialDone && (s.meta.tutorialStep||0) === 2) {
@@ -196,6 +201,8 @@ async function init() {
       tut.root.setAttribute('aria-hidden','true');
     }
     store.setState(s);
+    // visual feedback
+    showFloatGain(`+${stGain} ST`, document.getElementById('btn-simple-law'));
   });
   const btnClearEvents = document.getElementById('btn-clear-events');
   btnClearEvents.addEventListener('click', () => { const s = store.getState(); s.events = []; store.setState(s); });
@@ -252,5 +259,17 @@ function renderTutorial(){
 }
 
 init();
+
+// Small floating gain indicator
+function showFloatGain(text, anchorEl){
+  const rect = anchorEl.getBoundingClientRect();
+  const div = document.createElement('div');
+  div.className = 'float-gain';
+  div.textContent = text;
+  div.style.left = `${rect.left + rect.width/2}px`;
+  div.style.top = `${rect.top}px`;
+  document.body.appendChild(div);
+  setTimeout(()=> div.remove(), 900);
+}
 
 
