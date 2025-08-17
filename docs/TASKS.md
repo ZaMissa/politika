@@ -76,6 +76,7 @@ Acceptance (DoD Faza 3)
 - [ ] Optimizacije rendera (throttling, memoizacija)
 - [ ] Pristupačnost: kontrast, tastatura, ARIA
 - [~] Sistem dostignuća (min. 10) — UI + logika (trenutno 10+)
+- [x] UI throttling (update na 4Hz)
 - [ ] Smart upgrade preporuke (heuristike; AI posle MVP)
 
 Acceptance (DoD Faza 4)

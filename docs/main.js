@@ -400,7 +400,7 @@ function startElectionCycle(s){
   if (high) checkAchievements(s);
 }
 
-let last = 0; let acc = 0; let saveAcc = 0; const TICK = 1/60;
+let last = 0; let acc = 0; let saveAcc = 0; let uiAcc = 0; const TICK = 1/60; const UI_INTERVAL = 0.25;
 function loop(t) {
   if (!last) last = t;
   let dt = (t - last) / 1000;
@@ -410,6 +410,7 @@ function loop(t) {
     tick(TICK);
     acc -= TICK;
     saveAcc += TICK;
+    uiAcc += TICK;
   }
   if (saveAcc >= 5) {
     saveGame(store.getState());
@@ -417,7 +418,7 @@ function loop(t) {
     setTimeout(() => { el.saveStatus.textContent = ''; }, 1200);
     saveAcc = 0;
   }
-  updateUI();
+  if (uiAcc >= UI_INTERVAL) { updateUI(); uiAcc = 0; }
   requestAnimationFrame(loop);
 }
 
