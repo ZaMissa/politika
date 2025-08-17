@@ -178,13 +178,13 @@ function updateUI() {
   const btnPres = document.getElementById('btn-buy-presidency');
   if (btnPres) btnPres.disabled = (s.institutions.presidency || 0) >= 1 || s.resources.dp < presCostExec;
 
-  const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+  const minEduCostExec = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
   const minEduCostEl = document.getElementById('min-edu-cost');
-  if (minEduCostEl) minEduCostEl.textContent = `Cena: ${minEduCost} DP`;
+  if (minEduCostEl) minEduCostEl.textContent = `Cena: ${minEduCostExec} DP`;
   const minEduStatus = document.getElementById('min-edu-status');
   if (minEduStatus) minEduStatus.textContent = s.policies?.ministries?.includes('education') ? 'osnovano (+20% DP)' : 'nije osnovano';
   const btnMinEdu = document.getElementById('btn-buy-min-education');
-  if (btnMinEdu) btnMinEdu.disabled = s.policies?.ministries?.includes('education') || s.resources.dp < minEduCost;
+  if (btnMinEdu) btnMinEdu.disabled = s.policies?.ministries?.includes('education') || s.resources.dp < minEduCostExec;
 
   // Judicial UI
   const nextCourtLevel = (s.institutions.courts || 0) + 1;
@@ -291,7 +291,7 @@ function updateUI() {
   // Control hub state (disable when not affordable/already owned)
   const s2 = s;
   const presCostHub = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
-  const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+  const minEduCostHub = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
   const parlNext = (s2.institutions.parliament||0)+1; const parlCfg = balanceConfig?.institutions?.parliament?.levels?.[parlNext];
   const courtNext = (s2.institutions.courts||0)+1; const courtCfg = balanceConfig?.judicial?.courts?.levels?.[courtNext];
   const setD = (id,dis)=>{ const b=document.getElementById(id); if(b) b.disabled=!!dis; };
@@ -302,7 +302,7 @@ function updateUI() {
   setD('hub-court-1', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
   setD('hub-court-10', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
   setD('hub-court-max', !courtCfg || s2.resources.dp < (courtCfg?.costDP||Infinity));
-  setD('hub-min-edu', (s2.policies?.ministries||[]).includes('education') || s2.resources.dp < minEduCost);
+  setD('hub-min-edu', (s2.policies?.ministries||[]).includes('education') || s2.resources.dp < minEduCostHub);
   const rkeys=['civil','human','social','economic','environmental'];
   rkeys.forEach(k=>{ const cost=balanceConfig?.rights?.[k]?.costDP??0; setD(`hub-rights-${k}`, (s2.policies?.rights||[]).includes(k) || s2.resources.dp < cost); });
   const caCost = balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100;
