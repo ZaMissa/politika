@@ -16,6 +16,8 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .rate{color:var(--muted);font-size:.85rem;margin-left:6px}
 .panels{display:grid;grid-template-columns:1fr;gap:16px}
 .panel{background:var(--card);padding:16px;border:1px solid var(--border);border-radius:8px}
+.info-btn{margin-left:8px;background:transparent;border:1px solid var(--border);color:var(--fg);border-radius:999px;width:24px;height:24px;cursor:pointer}
+.info-btn:focus{outline:2px solid var(--primary)}
 .feed{max-height:240px;overflow:auto;border:1px dashed var(--border);border-radius:8px;padding:8px;background:rgba(255,255,255,0.02)}
 .feed ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
 .feed li{font-size:.95rem;color:var(--fg)}

@@ -469,6 +469,17 @@ async function init() {
   document.getElementById('hub-law-simple')?.addEventListener('click', () => document.getElementById('btn-simple-law')?.click());
   document.getElementById('hub-law-const')?.addEventListener('click', () => document.getElementById('btn-const-amend')?.click());
   document.getElementById('hub-law-treaty')?.addEventListener('click', () => document.getElementById('btn-intl-treaty')?.click());
+
+  // Info tooltips: show concept snippets
+  const showInfo = (key, anchorId) => {
+    const text = i18n?.concepts?.[key]; if (!text) return;
+    const anchor = document.getElementById(anchorId); if (!anchor) return;
+    showFloatGain(text, anchor);
+  };
+  document.getElementById('info-leg')?.addEventListener('click', () => showInfo('parliament','info-leg'));
+  document.getElementById('info-exec')?.addEventListener('click', () => showInfo('presidency','info-exec'));
+  document.getElementById('info-jud')?.addEventListener('click', () => showInfo('courts','info-jud'));
+  document.getElementById('info-elect')?.addEventListener('click', () => showInfo('elections','info-elect'));
   // Presidency
   const btnPres = document.getElementById('btn-buy-presidency');
   btnPres?.addEventListener('click', () => {

@@ -34,7 +34,7 @@
 
       <section class="panels" aria-label="Institucije">
         <div class="panel" id="panel-legislative">
-          <h2>Zakonodavna vlast</h2>
+          <h2>Zakonodavna vlast <button id="info-leg" class="info-btn" aria-label="Pomoć: Zakonodavna">i</button></h2>
           <p>Parlament nivo: <span id="parliament-level">0</span></p>
           <button id="btn-buy-parliament" class="btn-primary">Kupi Parlament (sledeći nivo)</button>
           <p class="hint" id="parliament-cost">Cena: —</p>
@@ -54,7 +54,7 @@
           <p>International Treaty: <button id="btn-intl-treaty" class="btn-primary">Potpiši međunarodni sporazum</button> <span id="intl-treaty-cost" class="hint"></span></p>
         </div>
         <div class="panel" id="panel-executive">
-          <h2>Izvršna vlast</h2>
+          <h2>Izvršna vlast <button id="info-exec" class="info-btn" aria-label="Pomoć: Izvršna">i</button></h2>
           <p>Predsedništvo nivo: <span id="presidency-level">0</span></p>
           <button id="btn-buy-presidency" class="btn-primary">Kupi Predsedništvo (lvl 1)</button>
           <p class="hint" id="presidency-cost">Cena: 25 DP</p>
@@ -64,7 +64,7 @@
           <p class="hint" id="min-edu-cost">Cena: 100 DP</p>
         </div>
         <div class="panel" id="panel-judicial">
-          <h2>Sudska vlast</h2>
+          <h2>Sudska vlast <button id="info-jud" class="info-btn" aria-label="Pomoć: Sudska">i</button></h2>
           <p>Sudovi nivo: <span id="courts-level">0</span></p>
           <button id="btn-buy-courts" class="btn-primary">Unapredi Sudove (sledeći nivo)</button>
           <p class="hint" id="courts-cost">Cena: —</p>
@@ -86,7 +86,7 @@
       </section>
 
       <section class="panel" aria-label="Izbori">
-        <h2>Izbori</h2>
+        <h2>Izbori <button id="info-elect" class="info-btn" aria-label="Pomoć: Izbori">i</button></h2>
         <p>Sledeći ciklus za: <span id="election-countdown">—</span></p>
         <p>Status: <span id="election-status" class="badge" aria-live="polite">van ciklusa</span></p>
         <div class="actions">
