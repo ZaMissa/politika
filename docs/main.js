@@ -291,7 +291,7 @@ function updateUI() {
   // Control hub state (disable when not affordable/already owned)
   const s2 = s;
   const presCostHub = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
-  const minEduCostHub = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+  const minEduCostHub = balanceConfig?.executive?.ministries?.education?.costDP ?? 100; // ensure only declared once
   const parlNext = (s2.institutions.parliament||0)+1; const parlCfg = balanceConfig?.institutions?.parliament?.levels?.[parlNext];
   const courtNext = (s2.institutions.courts||0)+1; const courtCfg = balanceConfig?.judicial?.courts?.levels?.[courtNext];
   const setD = (id,dis)=>{ const b=document.getElementById(id); if(b) b.disabled=!!dis; };
