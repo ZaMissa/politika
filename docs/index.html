@@ -185,29 +185,64 @@
         </div>
         <div class="tab-panels">
           <div id="panel-inst" role="tabpanel">
-            <div class="btn-group">
-              <button id="ip-parl-1" class="btn-primary">Parlament +1</button>
-              <button id="ip-pres-1" class="btn-primary">Predsedništvo lvl 1</button>
-              <button id="ip-court-1" class="btn-primary">Sudovi +1</button>
+            <div class="grid-3">
+              <div class="card" id="card-parl">
+                <h3>Parlament</h3>
+                <p class="meta">Nivo: <span id="card-parl-level">0</span></p>
+                <p class="muted">Cena: <span id="card-parl-cost">—</span></p>
+                <button id="ip-parl-1" class="btn-primary">Kupi (+1)</button>
+              </div>
+              <div class="card" id="card-pres">
+                <h3>Predsedništvo</h3>
+                <p class="meta">Status: <span id="card-pres-status">nije osnovano</span></p>
+                <p class="muted">Cena: <span id="card-pres-cost">—</span></p>
+                <button id="ip-pres-1" class="btn-primary">Osnuj</button>
+              </div>
+              <div class="card" id="card-courts">
+                <h3>Sudovi</h3>
+                <p class="meta">Nivo: <span id="card-courts-level">0</span></p>
+                <p class="muted">Cena: <span id="card-courts-cost">—</span></p>
+                <button id="ip-court-1" class="btn-primary">Unapredi (+1)</button>
+              </div>
             </div>
           </div>
           <div id="panel-policies" role="tabpanel" hidden>
-            <div class="btn-group">
-              <button id="ip-min-edu" class="btn-primary">Ministarstvo obrazovanja</button>
-            </div>
-            <div class="btn-group rights">
-              <button id="ip-rights-civil" class="btn-primary">Civil</button>
-              <button id="ip-rights-human" class="btn-primary">Human</button>
-              <button id="ip-rights-social" class="btn-primary">Social</button>
-              <button id="ip-rights-economic" class="btn-primary">Economic</button>
-              <button id="ip-rights-environmental" class="btn-primary">Environmental</button>
+            <div class="grid-3">
+              <div class="card" id="card-min-edu">
+                <h3>Ministarstvo obrazovanja</h3>
+                <p class="meta">Status: <span id="card-min-edu-status">nije osnovano</span></p>
+                <p class="muted">Cena: <span id="card-min-edu-cost">—</span></p>
+                <button id="ip-min-edu" class="btn-primary">Osnuj</button>
+              </div>
+              <div class="card" id="card-rights">
+                <h3>Prava</h3>
+                <div class="chips">
+                  <button id="ip-rights-civil" class="chip">Civil</button>
+                  <button id="ip-rights-human" class="chip">Human</button>
+                  <button id="ip-rights-social" class="chip">Social</button>
+                  <button id="ip-rights-economic" class="chip">Economic</button>
+                  <button id="ip-rights-environmental" class="chip">Environmental</button>
+                </div>
+              </div>
             </div>
           </div>
           <div id="panel-laws" role="tabpanel" hidden>
-            <div class="btn-group">
-              <button id="ip-law-simple" class="btn-primary">Simple Law</button>
-              <button id="ip-law-const" class="btn-primary">Ustavna izmena</button>
-              <button id="ip-law-treaty" class="btn-primary">Međunarodni sporazum</button>
+            <div class="grid-3">
+              <div class="card">
+                <h3>Simple Law</h3>
+                <p class="muted">Cena: <span id="card-law-simple-cost">—</span></p>
+                <button id="ip-law-simple" class="btn-primary">Usvoji</button>
+              </div>
+              <div class="card">
+                <h3>Ustavna izmena</h3>
+                <p class="muted">Cena: <span id="card-law-const-cost">—</span></p>
+                <button id="ip-law-const" class="btn-primary">Usvoji</button>
+              </div>
+              <div class="card">
+                <h3>Međunarodni sporazum</h3>
+                <p class="muted">Cena: <span id="card-law-treaty-cost">—</span></p>
+                <button id="ip-law-treaty" class="btn-primary">Potpiši</button>
+              </div>
             </div>
           </div>
         </div>

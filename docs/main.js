@@ -324,6 +324,19 @@ function updateUI() {
   setTitle('hub-law-const', `${i18n?.concepts?.constitutional_amendment||'Constitutional Amendment'} — ${caCostHub} DP`); mirrorAriaDisabled('hub-law-const');
   setTitle('hub-law-treaty', `${i18n?.concepts?.international_treaty||'International Treaty'} — ${itCostHub} DP`); mirrorAriaDisabled('hub-law-treaty');
 
+  // Mirror tab cards with live data
+  const cardParlLevel = document.getElementById('card-parl-level'); if (cardParlLevel) cardParlLevel.textContent = s.institutions.parliament || 0;
+  const cardParlCost = document.getElementById('card-parl-cost'); if (cardParlCost) cardParlCost.textContent = (parlCfg?.costDP ?? '—');
+  const cardPresStatus = document.getElementById('card-pres-status'); if (cardPresStatus) cardPresStatus.textContent = (s.institutions.presidency||0) ? 'osnovano' : 'nije osnovano';
+  const cardPresCost = document.getElementById('card-pres-cost'); if (cardPresCost) cardPresCost.textContent = presCostExec;
+  const cardCourtsLevel = document.getElementById('card-courts-level'); if (cardCourtsLevel) cardCourtsLevel.textContent = s.institutions.courts || 0;
+  const cardCourtsCost = document.getElementById('card-courts-cost'); if (cardCourtsCost) cardCourtsCost.textContent = (courtCfg?.costDP ?? '—');
+  const cardMinEduStatus = document.getElementById('card-min-edu-status'); if (cardMinEduStatus) cardMinEduStatus.textContent = (s.policies?.ministries||[]).includes('education') ? 'osnovano' : 'nije osnovano';
+  const cardMinEduCost = document.getElementById('card-min-edu-cost'); if (cardMinEduCost) cardMinEduCost.textContent = minEduCostExec;
+  const cardLawSimpleCost = document.getElementById('card-law-simple-cost'); if (cardLawSimpleCost) cardLawSimpleCost.textContent = (balanceConfig?.laws?.simple?.costDP ?? 10);
+  const cardLawConstCost = document.getElementById('card-law-const-cost'); if (cardLawConstCost) cardLawConstCost.textContent = (balanceConfig?.laws?.constitutionalAmendment?.costDP ?? 100);
+  const cardLawTreatyCost = document.getElementById('card-law-treaty-cost'); if (cardLawTreatyCost) cardLawTreatyCost.textContent = (balanceConfig?.laws?.internationalTreaty?.costDP ?? 500);
+
   // Render badges (elections)
   const badges = document.getElementById('badges');
   if (badges){

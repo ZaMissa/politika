@@ -48,6 +48,16 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .tab-btn{background:transparent;border:1px solid var(--border);color:var(--fg);padding:6px 10px;border-radius:8px;cursor:pointer}
 .tab-btn[aria-selected="true"]{background:var(--primary);color:#fff}
 .tab-panels{margin-top:8px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.grid-3{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.grid-3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
+.card h3{margin:0 0 6px 0}
+.card .meta{color:var(--muted)}
+.card .muted{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:transparent;border:1px solid var(--border);color:var(--fg);padding:6px 10px;border-radius:999px;cursor:pointer}
+.chip:disabled{opacity:.5;cursor:not-allowed}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
 .overlay[aria-hidden="false"]{display:flex}
