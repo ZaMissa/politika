@@ -487,6 +487,36 @@ async function init() {
   document.getElementById('info-exec')?.addEventListener('click', () => showInfo('presidency','info-exec'));
   document.getElementById('info-jud')?.addEventListener('click', () => showInfo('courts','info-jud'));
   document.getElementById('info-elect')?.addEventListener('click', () => showInfo('elections','info-elect'));
+
+  // Tabs: Institutions/Policies/Laws
+  const tabs = [
+    { btn: 'tab-inst', panel: 'panel-inst' },
+    { btn: 'tab-policies', panel: 'panel-policies' },
+    { btn: 'tab-laws', panel: 'panel-laws' }
+  ];
+  const setTab = (activeId) => {
+    tabs.forEach(({btn,panel}) => {
+      const b = document.getElementById(btn); const p = document.getElementById(panel);
+      if (!b || !p) return;
+      const active = btn === activeId;
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+      p.hidden = !active;
+    });
+  };
+  tabs.forEach(({btn}) => document.getElementById(btn)?.addEventListener('click', () => setTab(btn)));
+  setTab('tab-inst');
+
+  // Hook tab buttons to existing actions
+  document.getElementById('ip-parl-1')?.addEventListener('click', buyParliament);
+  document.getElementById('ip-pres-1')?.addEventListener('click', () => document.getElementById('btn-buy-presidency')?.click());
+  document.getElementById('ip-court-1')?.addEventListener('click', () => document.getElementById('btn-buy-courts')?.click());
+  document.getElementById('ip-min-edu')?.addEventListener('click', () => document.getElementById('btn-buy-min-education')?.click());
+  ['civil','human','social','economic','environmental'].forEach(k=>{
+    document.getElementById(`ip-rights-${k}`)?.addEventListener('click', () => document.getElementById(`btn-rights-${k}`)?.click());
+  });
+  document.getElementById('ip-law-simple')?.addEventListener('click', () => document.getElementById('btn-simple-law')?.click());
+  document.getElementById('ip-law-const')?.addEventListener('click', () => document.getElementById('btn-const-amend')?.click());
+  document.getElementById('ip-law-treaty')?.addEventListener('click', () => document.getElementById('btn-intl-treaty')?.click());
   // Presidency
   const btnPres = document.getElementById('btn-buy-presidency');
   btnPres?.addEventListener('click', () => {

@@ -49,6 +49,7 @@ Acceptance (DoD Faza 1)
 - [x] Pregledni panel za institucije i politike (osnovna verzija)
 - [x] Prečice iz pregleda na panele (anchors)
 - [x] Kontrolni centar (centralizovane kupovine i akcije)
+- [x] Tab panel “Institucije/Politike/Zakoni” (osnovna verzija)
 - [~] Bulk/auto upgrade opcije (heuristika + UI)
 
 ### Događaji (Events)

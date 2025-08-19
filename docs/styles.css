@@ -41,6 +41,11 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 @media (max-width:900px){.hub{grid-template-columns:1fr}}
 @media (max-width:720px){.hud{grid-template-columns:repeat(2,1fr)}}
 
+.tabs{display:flex;gap:8px;margin:8px 0}
+.tab-btn{background:transparent;border:1px solid var(--border);color:var(--fg);padding:6px 10px;border-radius:8px;cursor:pointer}
+.tab-btn[aria-selected="true"]{background:var(--primary);color:#fff}
+.tab-panels{margin-top:8px}
+
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
 .overlay[aria-hidden="false"]{display:flex}
 .overlay-content{background:var(--card);border:1px solid var(--border);border-radius:10px;max-width:560px;width:92vw;padding:16px}

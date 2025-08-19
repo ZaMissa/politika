@@ -176,6 +176,43 @@
         </div>
       </section>
 
+      <section class="panel" aria-label="Institucije i Politike (tabovi)" id="ip-tabs">
+        <h2>Institucije i Politike</h2>
+        <div class="tabs" role="tablist" aria-label="Institucije i Politike">
+          <button id="tab-inst" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-inst">Institucije</button>
+          <button id="tab-policies" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-policies">Politike</button>
+          <button id="tab-laws" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-laws">Zakoni</button>
+        </div>
+        <div class="tab-panels">
+          <div id="panel-inst" role="tabpanel">
+            <div class="btn-group">
+              <button id="ip-parl-1" class="btn-primary">Parlament +1</button>
+              <button id="ip-pres-1" class="btn-primary">Predsedništvo lvl 1</button>
+              <button id="ip-court-1" class="btn-primary">Sudovi +1</button>
+            </div>
+          </div>
+          <div id="panel-policies" role="tabpanel" hidden>
+            <div class="btn-group">
+              <button id="ip-min-edu" class="btn-primary">Ministarstvo obrazovanja</button>
+            </div>
+            <div class="btn-group rights">
+              <button id="ip-rights-civil" class="btn-primary">Civil</button>
+              <button id="ip-rights-human" class="btn-primary">Human</button>
+              <button id="ip-rights-social" class="btn-primary">Social</button>
+              <button id="ip-rights-economic" class="btn-primary">Economic</button>
+              <button id="ip-rights-environmental" class="btn-primary">Environmental</button>
+            </div>
+          </div>
+          <div id="panel-laws" role="tabpanel" hidden>
+            <div class="btn-group">
+              <button id="ip-law-simple" class="btn-primary">Simple Law</button>
+              <button id="ip-law-const" class="btn-primary">Ustavna izmena</button>
+              <button id="ip-law-treaty" class="btn-primary">Međunarodni sporazum</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="actions" aria-label="Akcije">
         <button id="btn-save">Sačuvaj</button>
         <button id="btn-reset" class="btn-danger">Reset</button>
