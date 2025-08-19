@@ -185,12 +185,20 @@
         </div>
         <div class="tab-panels">
           <div id="panel-inst" role="tabpanel">
+            <div class="toolbar">
+              <label><input type="checkbox" id="filter-inst-available" /> Samo dostupno</label>
+              <label><input type="checkbox" id="filter-inst-active" /> Samo aktivno</label>
+            </div>
             <div class="grid-3">
               <div class="card" id="card-parl">
                 <h3>Parlament</h3>
                 <p class="meta">Nivo: <span id="card-parl-level">0</span></p>
                 <p class="muted">Cena: <span id="card-parl-cost">—</span></p>
-                <button id="ip-parl-1" class="btn-primary">Kupi (+1)</button>
+                <div class="btn-group">
+                  <button id="ip-parl-1" class="btn-primary">Kupi (+1)</button>
+                  <button id="ip-parl-10" class="btn-secondary">+10</button>
+                  <button id="ip-parl-max" class="btn-secondary">Max</button>
+                </div>
               </div>
               <div class="card" id="card-pres">
                 <h3>Predsedništvo</h3>
@@ -202,11 +210,19 @@
                 <h3>Sudovi</h3>
                 <p class="meta">Nivo: <span id="card-courts-level">0</span></p>
                 <p class="muted">Cena: <span id="card-courts-cost">—</span></p>
-                <button id="ip-court-1" class="btn-primary">Unapredi (+1)</button>
+                <div class="btn-group">
+                  <button id="ip-court-1" class="btn-primary">Unapredi (+1)</button>
+                  <button id="ip-court-10" class="btn-secondary">+10</button>
+                  <button id="ip-court-max" class="btn-secondary">Max</button>
+                </div>
               </div>
             </div>
           </div>
           <div id="panel-policies" role="tabpanel" hidden>
+            <div class="toolbar">
+              <label><input type="checkbox" id="filter-pol-available" /> Samo dostupno</label>
+              <label><input type="checkbox" id="filter-pol-active" /> Samo aktivno</label>
+            </div>
             <div class="grid-3">
               <div class="card" id="card-min-edu">
                 <h3>Ministarstvo obrazovanja</h3>
@@ -227,6 +243,10 @@
             </div>
           </div>
           <div id="panel-laws" role="tabpanel" hidden>
+            <div class="toolbar">
+              <label><input type="checkbox" id="filter-laws-available" /> Samo dostupno</label>
+              <label><input type="checkbox" id="filter-laws-active" /> Samo aktivno</label>
+            </div>
             <div class="grid-3">
               <div class="card">
                 <h3>Simple Law</h3>

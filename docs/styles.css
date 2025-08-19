@@ -58,6 +58,9 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{background:transparent;border:1px solid var(--border);color:var(--fg);padding:6px 10px;border-radius:999px;cursor:pointer}
 .chip:disabled{opacity:.5;cursor:not-allowed}
+.toolbar{display:flex;gap:16px;align-items:center;margin-bottom:8px}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--fg);padding:8px 10px;border-radius:8px;cursor:pointer}
+.btn-secondary:hover{filter:brightness(1.05)}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
 .overlay[aria-hidden="false"]{display:flex}

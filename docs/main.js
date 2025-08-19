@@ -521,8 +521,12 @@ async function init() {
 
   // Hook tab buttons to existing actions
   document.getElementById('ip-parl-1')?.addEventListener('click', buyParliament);
+  document.getElementById('ip-parl-10')?.addEventListener('click', () => bulkBuyInstitution('parliament', 10));
+  document.getElementById('ip-parl-max')?.addEventListener('click', () => bulkBuyInstitution('parliament', Infinity));
   document.getElementById('ip-pres-1')?.addEventListener('click', () => document.getElementById('btn-buy-presidency')?.click());
   document.getElementById('ip-court-1')?.addEventListener('click', () => document.getElementById('btn-buy-courts')?.click());
+  document.getElementById('ip-court-10')?.addEventListener('click', () => bulkBuyInstitution('courts', 10));
+  document.getElementById('ip-court-max')?.addEventListener('click', () => bulkBuyInstitution('courts', Infinity));
   document.getElementById('ip-min-edu')?.addEventListener('click', () => document.getElementById('btn-buy-min-education')?.click());
   ['civil','human','social','economic','environmental'].forEach(k=>{
     document.getElementById(`ip-rights-${k}`)?.addEventListener('click', () => document.getElementById(`btn-rights-${k}`)?.click());
@@ -530,6 +534,39 @@ async function init() {
   document.getElementById('ip-law-simple')?.addEventListener('click', () => document.getElementById('btn-simple-law')?.click());
   document.getElementById('ip-law-const')?.addEventListener('click', () => document.getElementById('btn-const-amend')?.click());
   document.getElementById('ip-law-treaty')?.addEventListener('click', () => document.getElementById('btn-intl-treaty')?.click());
+
+  // Filters (basic): toggle visibility by available/active
+  const applyFilters = () => {
+    const s = store.getState();
+    const instAvail = document.getElementById('filter-inst-available')?.checked;
+    const instAct = document.getElementById('filter-inst-active')?.checked;
+    const polAvail = document.getElementById('filter-pol-available')?.checked;
+    const polAct = document.getElementById('filter-pol-active')?.checked;
+    const lawAvail = document.getElementById('filter-laws-available')?.checked;
+    const lawAct = document.getElementById('filter-laws-active')?.checked;
+    // Institutions
+    const parlNext = (s.institutions.parliament||0)+1; const parlCfg = balanceConfig?.institutions?.parliament?.levels?.[parlNext];
+    const showParl = (!instAvail || !!parlCfg) && (!instAct || (s.institutions.parliament||0)>0);
+    document.getElementById('card-parl').style.display = showParl ? '' : 'none';
+    const presCost = balanceConfig?.executive?.presidency?.levels?.[1]?.costDP ?? 25;
+    const showPres = (!instAvail || s.resources.dp >= presCost) && (!instAct || (s.institutions.presidency||0)>0);
+    document.getElementById('card-pres').style.display = showPres ? '' : 'none';
+    const courtNext = (s.institutions.courts||0)+1; const courtCfg = balanceConfig?.judicial?.courts?.levels?.[courtNext];
+    const showCourts = (!instAvail || !!courtCfg) && (!instAct || (s.institutions.courts||0)>0);
+    document.getElementById('card-courts').style.display = showCourts ? '' : 'none';
+    // Policies
+    const minEduCost = balanceConfig?.executive?.ministries?.education?.costDP ?? 100;
+    const minEduOwned = (s.policies?.ministries||[]).includes('education');
+    const showMinEdu = (!polAvail || s.resources.dp >= minEduCost) && (!polAct || minEduOwned);
+    document.getElementById('card-min-edu').style.display = showMinEdu ? '' : 'none';
+    // Laws
+    const simpleCost = balanceConfig?.laws?.simple?.costDP ?? 10;
+    const showSimple = (!lawAvail || s.resources.dp >= simpleCost) && (!lawAct || (s.meta.simpleLaws||0)>0);
+    document.getElementById('ip-law-simple')?.closest('.card').style.display = showSimple ? '' : 'none';
+  };
+  ['filter-inst-available','filter-inst-active','filter-pol-available','filter-pol-active','filter-laws-available','filter-laws-active']
+    .forEach(id => document.getElementById(id)?.addEventListener('change', applyFilters));
+  applyFilters();
   // Presidency
   const btnPres = document.getElementById('btn-buy-presidency');
   btnPres?.addEventListener('click', () => {
