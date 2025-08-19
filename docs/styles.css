@@ -26,6 +26,8 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .btn-primary{background:var(--primary);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
 .btn-danger{background:var(--danger);color:#000;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;margin-left:8px}
+.btn-primary:hover:not(:disabled){filter:brightness(1.05)}
+.btn-danger:hover{filter:brightness(1.05)}
 .actions{margin-top:16px;display:flex;align-items:center;gap:8px}
 .hint{color:var(--muted);margin-top:6px}
 .btn-group{display:flex;gap:8px;margin-top:8px}
@@ -36,6 +38,7 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:sy
 .badges{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .overview{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .overview ul{margin:0;padding-left:20px}
+.panel h2{display:flex;align-items:center;gap:8px}
 .achieved{color:#6cff6c}
 .hub{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 @media (max-width:900px){.hub{grid-template-columns:1fr}}
